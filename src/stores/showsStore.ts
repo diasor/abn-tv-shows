@@ -17,21 +17,37 @@ export const useShowsStore = defineStore('shows', () => {
 
   const fetchShows = async (page: number = 1): Promise<void> => {
     isLoading.value = true;
-    const response = await fetchClient(
-      `${API_SHOWS_BASE}/shows?&page=${page}&limit=${DEFAULT_SHOWS_LIMIT}`,
-    );
-    shows.value = response as TVShow[];
-    isLoading.value = false;
+    try {
+      const response = await fetchClient(
+        `${API_SHOWS_BASE}/shows?&page=${page}&limit=${DEFAULT_SHOWS_LIMIT}`,
+      );
+      shows.value = response as TVShow[];
+    } catch (error) {
+      shows.value = [];
+    } finally {
+      isLoading.value = false;
+    }
   };
 
   const getShowsByGenre = async (page: number = 1): Promise<void> => {
     isLoading.value = true;
-    const response = await fetchClient(
-      `${API_SHOWS_BASE}/shows?page=${selectedGenre.value}&page=${page}&limit=${DEFAULT_SHOWS_LIMIT}`,
-    );
-    shows.value = response as TVShow[];
-    isLoading.value = false;
+    try {
+      const response = await fetchClient(
+        `${API_SHOWS_BASE}/shows?page=${selectedGenre.value}&page=${page}&limit=${DEFAULT_SHOWS_LIMIT}`,
+      );
+      shows.value = response as TVShow[];
+    } catch (error) {
+      shows.value = [];
+    } finally {
+      isLoading.value = false;
+    }
   };
 
-  return { visibleShows, selectedGenre, fetchShows, getShowsByGenre };
+  return {
+    visibleShows,
+    selectedGenre,
+    fetchShows,
+    getShowsByGenre,
+    isLoading,
+  };
 });

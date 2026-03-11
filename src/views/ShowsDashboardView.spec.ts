@@ -4,8 +4,6 @@ import PrimeVue from 'primevue/config';
 import ShowsDashboardView from './ShowsDashboardView.vue';
 import ShowsTile from '@/components/shows/ShowsTile.vue';
 import { useShowsStore } from '@/stores/showsStore';
-import type { _DeepPartial, SubscriptionCallback, StoreOnActionListener } from 'pinia';
-import type { ComputedRef, Ref, WatchOptions } from 'vue';
 
 const tvShow1 = {
   name: 'Test Show 1',

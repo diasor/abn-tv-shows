@@ -7,11 +7,14 @@
  * @returns
  */
 export async function fetchClient<T>(url: string): Promise<T> {
-  const response = await fetch(url);
-
-  if (!response.ok) {
-    throw new Error('API request failed');
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('API request failed');
+    } else {
+      return response.json() as Promise<T>;
+    }
+  } catch (error) {
+    throw error;
   }
-
-  return response.json() as Promise<T>;
 }

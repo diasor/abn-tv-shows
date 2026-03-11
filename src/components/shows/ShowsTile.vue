@@ -35,13 +35,13 @@ const formattedPremiered = computed(() => {
 </script>
 
 <template>
-  <Card class="show-tile">
+  <Card class="show-tile flex">
     <template #title>
       <h2 class="show-title">{{ props.name }}</h2>
     </template>
 
     <template #content>
-      <div class="show-content">
+      <div class="show-content flex">
         <img
           v-if="props.image?.medium"
           :src="props.image.medium"
@@ -49,25 +49,25 @@ const formattedPremiered = computed(() => {
           class="show-image"
         />
 
-        <div class="show-info">
-          <div class="info-row">
+        <div class="show-info flex flex-column">
+          <div class="info-row flex">
             <span class="label">Language:</span>
             <span class="value" data-testid="show-language">{{ props.language || 'N/A' }}</span>
           </div>
 
-          <div class="info-row">
+          <div class="info-row flex">
             <span class="label">Premiered:</span>
             <span class="value" data-testid="show-premiered">{{ formattedPremiered }}</span>
           </div>
 
-          <div class="info-row">
+          <div class="info-row flex">
             <span class="label">Rating:</span>
             <Badge :value="formattedRating" severity="success" class="rating-badge" />
           </div>
 
-          <div class="genres-section" v-if="formattedGenres.length">
+          <div class="genres-section flex flex-column" v-if="formattedGenres.length">
             <span class="label">Genres:</span>
-            <div class="genres-list">
+            <div class="genres-list flex flex-wrap">
               <Badge
                 v-for="genre in formattedGenres"
                 :key="genre"
@@ -83,78 +83,53 @@ const formattedPremiered = computed(() => {
   </Card>
 </template>
 
-<style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+<style scoped lang="scss">
+@import '@/assets/theme.scss';
 
 .show-tile {
-  position: relative;
-  display: inline-block;
   padding: 0.35rem 0.6rem;
   border-radius: 0.5rem;
-  background:
-    linear-gradient(180deg, #ffffff 0%, #f3eefb 100%) padding-box,
-    linear-gradient(145deg, #9f86bd 0%, #6f4d95 45%, #4a335f 100%) border-box;
-  box-shadow:
-    inset 0 2px 0 rgba(255, 255, 255, 0.9),
-    /* top edge highlight */ inset 0 -3px 6px rgba(58, 39, 76, 0.28),
-    /* bottom inner depth */ inset 2px 0 3px rgba(255, 255, 255, 0.28),
-    /* left bevel */ inset -2px 0 4px rgba(58, 39, 76, 0.2),
-    /* right bevel */ 0 10px 20px rgba(58, 39, 76, 0.28),
-    /* outer shadow */ 0 2px 4px rgba(58, 39, 76, 0.2);
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
+  background: $background-gradient;
+  box-shadow: $box-shadow-gradient;
+  transition: $playful-transition;
 }
 
 .show-tile:hover {
   transform: translateY(-10px);
   border-radius: 0.5rem;
-
-  background:
-    linear-gradient(180deg, #ffffff, #ede6f8) padding-box,
-    linear-gradient(135deg, #4a2f61 0%, #6b4c8f 45%, #8f6ac0 75%, #5a3f76 100%) border-box;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -2px 5px rgba(63, 42, 82, 0.24),
-    0 10px 24px rgba(63, 42, 82, 0.34),
-    0 0 0 1px rgba(122, 90, 166, 0.35),
-    0 0 20px rgba(122, 90, 166, 0.28);
+  background: $background-gradient;
+  box-shadow: $box-shadow-gradient;
 }
 
 .show-content {
-  display: flex;
   flex-direction: column;
   gap: 1rem;
-  min-width: 270px;
+  overflow: hidden;
 }
 
 .show-title {
+  font-family: $font-playful;
   font-size: 1.25rem;
   font-weight: 500;
-  font-family: 'Fredoka One', cursive;
   margin: 0;
-  color: #5b3f73; /* dark lilac */
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  color: $color-lilac-dark;
+  text-shadow: $font-text-shadow-playful;
   line-height: 1.3;
 }
 
 .show-image {
   width: 100%;
+  max-width: 100%;
   height: auto;
   border-radius: 0.5rem;
   object-fit: cover;
 }
 
 .show-info {
-  display: flex;
-  flex-direction: column;
   gap: 0.75rem;
 }
 
 .info-row {
-  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.25rem 0;
@@ -162,7 +137,7 @@ const formattedPremiered = computed(() => {
 
 .label {
   font-weight: 500;
-  color: var(--text-color-secondary);
+  color: $color-lilac-dark;
   font-size: 0.9rem;
 }
 
@@ -178,14 +153,10 @@ const formattedPremiered = computed(() => {
 }
 
 .genres-section {
-  display: flex;
-  flex-direction: column;
   gap: 0.5rem;
 }
 
 .genres-list {
-  display: flex;
-  flex-wrap: wrap;
   gap: 0.5rem;
 }
 
@@ -195,6 +166,21 @@ const formattedPremiered = computed(() => {
 }
 
 /* Responsive design */
+@media (max-width: 1200px) {
+  .show-content {
+    min-width: 0;
+  }
+
+  .show-tile {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .show-image {
+    max-height: 220px;
+  }
+}
+
 @media (max-width: 768px) {
   .show-title {
     font-size: 1.1rem;
