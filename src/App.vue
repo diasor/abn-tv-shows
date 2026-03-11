@@ -1,49 +1,42 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
-import Menubar from 'primevue/menubar';
-
-const menuItems = [
-  {
-    label: 'Home',
-    to: '/',
-  },
-  {
-    label: 'About',
-    to: '/about',
-  },
-];
+import TheMenu from '@/components/the-menu/TheMenu.vue';
 </script>
 
 <template>
-  <div class="main-container">
-    <header>
-      <Menubar :model="menuItems" />
-    </header>
+  <header class="app-header flex">
+    <TheMenu />
+  </header>
 
-    <main>
-      <RouterView />
-    </main>
-  </div>
+  <main class="app-main-container flex flex-column flex-1 align-items-center justify-content-start">
+    <RouterView />
+  </main>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  margin: 2rem auto;
-  max-width: calc(100vw - 10rem);
+<style>
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
-main {
-  /* margin: 5rem auto; */
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  /* min-height: calc(100vh - 200px); */
-}
-
-.main-container {
+#app {
   display: flex;
   flex-direction: column;
-  /* min-height: 100vh; */
+  min-height: 100vh;
+  min-width: 100vw;
+  background: linear-gradient(135deg, #d6d2db, #6a6275, #3f3f44);
+}
+
+.app-header {
+  width: calc(100% - 8rem);
+  margin: 2rem 4rem;
+}
+
+.app-main-container {
+  width: calc(100% - 8rem);
+  margin: 2rem 4rem;
 }
 </style>
