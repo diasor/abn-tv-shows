@@ -49,7 +49,7 @@ const items = ref([
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/theme.scss';
+@use '@/assets/theme' as *;
 
 .menu-container {
   line-height: 1.5;

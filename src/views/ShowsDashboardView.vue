@@ -34,7 +34,7 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/theme.scss';
+@use '@/assets/theme' as *;
 
 .dashboard-card {
   border-radius: 12px;

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Card from 'primevue/card';
 import Badge from 'primevue/badge';
+import Rating from 'primevue/rating';
 import { computed } from 'vue';
 
 interface IShowProps {
@@ -41,6 +42,7 @@ const formattedPremiered = computed(() => {
     </template>
 
     <template #content>
+      <!-- Image section -->
       <div class="show-content flex">
         <img
           v-if="props.image?.medium"
@@ -49,22 +51,33 @@ const formattedPremiered = computed(() => {
           class="show-image"
         />
 
+        <!-- Language section -->
         <div class="show-info flex flex-column">
-          <div class="info-row flex">
+          <div class="info-row">
             <span class="label">Language:</span>
             <span class="value" data-testid="show-language">{{ props.language || 'N/A' }}</span>
           </div>
 
-          <div class="info-row flex">
+          <!-- Premiered section -->
+          <div class="info-row">
             <span class="label">Premiered:</span>
             <span class="value" data-testid="show-premiered">{{ formattedPremiered }}</span>
           </div>
 
-          <div class="info-row flex">
+          <!-- Rating section -->
+          <div class="info-row">
             <span class="label">Rating:</span>
             <Badge :value="formattedRating" severity="success" class="rating-badge" />
+            <Rating
+              :modelValue="Math.round((props.rating?.average || 0) / 2)"
+              :readonly="true"
+              :cancel="false"
+              :stars="5"
+              class="rating-badge"
+            />
           </div>
 
+          <!-- Genres section -->
           <div class="genres-section flex flex-column" v-if="formattedGenres.length">
             <span class="label">Genres:</span>
             <div class="genres-list flex flex-wrap">
@@ -84,7 +97,7 @@ const formattedPremiered = computed(() => {
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/theme.scss';
+@use '@/assets/theme' as *;
 
 .show-tile {
   padding: 0.35rem 0.6rem;
@@ -99,6 +112,7 @@ const formattedPremiered = computed(() => {
   border-radius: 0.5rem;
   background: $background-gradient;
   box-shadow: $box-shadow-gradient;
+  cursor: pointer;
 }
 
 .show-content {
@@ -130,6 +144,7 @@ const formattedPremiered = computed(() => {
 }
 
 .info-row {
+  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.25rem 0;
@@ -161,8 +176,10 @@ const formattedPremiered = computed(() => {
 }
 
 .genre-badge {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   padding: 0.2rem 0.4rem;
+  margin: auto 0.2rem;
+  background-color: $color-lilac-darker;
 }
 
 /* Responsive design */
