@@ -80,6 +80,32 @@ h3 {
   }
 }
 
+/* Anchors */
+a {
+  font-weight: 500;
+  color: $color-lilac-medium;
+  text-decoration: underline;
+  text-decoration-color: $color-lilac-medium;
+  transition:
+    color 0.2s ease,
+    text-decoration-color 0.2s ease;
+
+  &:hover {
+    color: $color-lilac-darker;
+    text-decoration-color: $color-lilac-darker;
+  }
+
+  &:active {
+    color: $color-lilac-darker;
+    text-decoration-color: $color-lilac-darker;
+  }
+
+  &:visited {
+    color: $color-lilac-darker;
+    text-decoration-color: $color-lilac-darker;
+  }
+}
+
 .tv-show-label {
   font-weight: 700;
   font-size: 0.8rem;
