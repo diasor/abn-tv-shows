@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
-import TheMenu from '@/components/the-menu/TheMenu.vue';
+import TheMenu from '@/components/base/TheMenu.vue';
 </script>
 
 <template>

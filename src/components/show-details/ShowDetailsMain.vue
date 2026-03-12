@@ -1,39 +1,45 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, watch } from 'vue';
 import ShowDetailsSkeleton from '@/components/show-details/ShowDetailsSkeleton.vue';
 import ShowImage from '@/components/show-details/ShowImage.vue';
 import ShowSummary from '@/components/show-details/ShowSummary.vue';
-import type { TVShowDetails, TVShowImage, TVShowRating } from '@/schemas/Shows';
 import ShowInformation from './ShowInformation.vue';
+
+import type { TVShowDetails } from '@/schemas/Shows';
 
 interface IShowDetailsProps {
   tvShow: TVShowDetails;
   isLoading: boolean;
 }
 const props = defineProps<IShowDetailsProps>();
-// const tvShowAvailable = computed(
-//   (): boolean => props.tvShow.id !== undefined && props.tvShow.name !== undefined,
-// );
 
-const tvShowAvailable = computed((): boolean => props.isLoading && props.tvShow.id !== undefined);
+const tvShowSkeleton = ref(true);
+watch(
+  [() => props.isLoading, () => props.tvShow.id],
+  ([isLoading, tvShowId]) => {
+    tvShowSkeleton.value = isLoading || tvShowId === undefined;
+  },
+  { immediate: true },
+);
 </script>
 
 <template>
   <div class="tv-show-details-card">
-    <ShowDetailsSkeleton v-if="tvShowAvailable" />
+    <ShowDetailsSkeleton v-if="tvShowSkeleton" />
     <div v-else class="tv-show-layout">
-      <div class="tv-show-image">
+      <div class="tv-show-image-section">
         <!-- Image section -->
         <ShowImage :image="props.tvShow.image" :alt="props.tvShow.name" :showPreview="true" />
       </div>
 
       <div class="tv-show-row">
+        <!-- Summary section -->
         <ShowSummary :summary="props.tvShow.summary" />
       </div>
       <div class="tv-show-row">
+        <!-- Detailed show information section -->
         <ShowInformation :tvShow="props.tvShow" />
       </div>
-      <div class="tv-show-row">Row 3</div>
     </div>
   </div>
 </template>
@@ -52,16 +58,19 @@ const tvShowAvailable = computed((): boolean => props.isLoading && props.tvShow.
 .tv-show-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   width: 100%;
   border-radius: 0.5rem;
 }
 
 /* Image spans the full left column */
-.tv-show-image {
-  grid-row: 1 / 4;
+.tv-show-image-section {
+  grid-row: 1 / 3;
   grid-column: 1;
   border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Right column rows */
@@ -77,17 +86,20 @@ const tvShowAvailable = computed((): boolean => props.isLoading && props.tvShow.
 @media (max-width: 768px) {
   .tv-show-layout {
     grid-template-columns: 1fr;
-    grid-template-rows: auto repeat(3, 150px);
+    grid-template-rows: auto;
+    grid-auto-rows: auto;
   }
 
-  .tv-show-image {
+  .tv-show-image-section {
     grid-column: 1;
     grid-row: 1;
-    height: 300px;
+    height: auto;
   }
 
   .tv-show-row {
     grid-column: 1;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
 }
 </style>

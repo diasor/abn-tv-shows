@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 import ShowsTile from './ShowsTile.vue';
 import PrimeVue from 'primevue/config';
+import { NOT_AVAILABLE } from '@/shared/api/constants';
 
 describe('Testing ShowsTile.vue', () => {
   const tvShowImage = 'https://example.com/image.jpg';
@@ -72,7 +73,7 @@ describe('Testing ShowsTile.vue', () => {
       // arrange & act
       const wrapper = createWrapper({ rating: { average: null } });
       // assert
-      expect(wrapper.text()).toContain('N/A');
+      expect(wrapper.text()).toContain(NOT_AVAILABLE);
     });
   });
 
@@ -90,7 +91,7 @@ describe('Testing ShowsTile.vue', () => {
       const wrapper = createWrapper({ premiered: null });
       const premieredText = wrapper.find('[data-testid="show-premiered"]');
       // assert
-      expect(premieredText.text()).toContain('N/A');
+      expect(premieredText.text()).toContain(NOT_AVAILABLE);
     });
 
     it('displays N/A, when the premiered date is undefined', () => {
@@ -98,7 +99,7 @@ describe('Testing ShowsTile.vue', () => {
       const wrapper = createWrapper({ premiered: undefined });
       const premieredText = wrapper.find('[data-testid="show-premiered"]');
       // assert
-      expect(premieredText.text()).toContain('N/A');
+      expect(premieredText.text()).toContain(NOT_AVAILABLE);
     });
 
     it('displays N/A, when the premiered date is an empty string', () => {
@@ -106,7 +107,7 @@ describe('Testing ShowsTile.vue', () => {
       const wrapper = createWrapper({ premiered: '' });
       const premieredText = wrapper.find('[data-testid="show-premiered"]');
       // assert
-      expect(premieredText.text()).toContain('N/A');
+      expect(premieredText.text()).toContain(NOT_AVAILABLE);
     });
 
     it('displays N/A, when the premiered date is an invalid date', () => {
@@ -114,7 +115,7 @@ describe('Testing ShowsTile.vue', () => {
       const wrapper = createWrapper({ premiered: 'something else' });
       const premieredText = wrapper.find('[data-testid="show-premiered"]');
       // assert
-      expect(premieredText.text()).toContain('N/A');
+      expect(premieredText.text()).toContain(NOT_AVAILABLE);
     });
   });
 
@@ -132,7 +133,7 @@ describe('Testing ShowsTile.vue', () => {
       const wrapper = createWrapper({ language: undefined });
       const languageText = wrapper.find('[data-testid="show-language"]');
       // assert
-      expect(languageText.text()).toContain('N/A');
+      expect(languageText.text()).toContain(NOT_AVAILABLE);
     });
   });
 

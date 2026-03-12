@@ -1,46 +1,98 @@
 <script setup lang="ts">
 import Skeleton from 'primevue/skeleton';
+import BaseShowData from '@/components/base/BaseShowData.vue';
 </script>
 
 <template>
-  <div class="card">
-    <div class="flex flex-wrap">
-      <div class="w-full xl:w-6/12 p-4">
-        <h5>Rectangle</h5>
-        <Skeleton class="mb-2"></Skeleton>
-        <Skeleton width="10rem" class="mb-2"></Skeleton>
-        <Skeleton width="5rem" class="mb-2"></Skeleton>
-        <Skeleton height="2rem" class="mb-2"></Skeleton>
-        <Skeleton width="10rem" height="4rem"></Skeleton>
+  <div class="tv-show-layout">
+    <div class="tv-show-image-section">
+      <!-- Image section -->
+      <Skeleton width="100%" height="100%" class="tv-show-image-skeleton" />
+    </div>
+
+    <div class="tv-show-row">
+      <!-- Summary section -->
+      <div class="tv-show-column">
+        <h3>Summary:</h3>
+        <Skeleton width="100%" height="4rem" class="tv-show-skeleton" />
       </div>
-      <div class="w-full xl:w-6/12 p-4">
-        <h5>Rounded</h5>
-        <Skeleton class="mb-2" borderRadius="16px"></Skeleton>
-        <Skeleton width="10rem" class="mb-2" borderRadius="16px"></Skeleton>
-        <Skeleton width="5rem" borderRadius="16px" class="mb-2"></Skeleton>
-        <Skeleton height="2rem" class="mb-2" borderRadius="16px"></Skeleton>
-        <Skeleton width="10rem" height="4rem" borderRadius="16px"></Skeleton>
-      </div>
-      <div class="w-full xl:w-6/12 p-4">
-        <h5 class="mt-4">Square</h5>
-        <div class="flex items-end">
-          <Skeleton size="2rem" class="mr-2"></Skeleton>
-          <Skeleton size="3rem" class="mr-2"></Skeleton>
-          <Skeleton size="4rem" class="mr-2"></Skeleton>
-          <Skeleton size="5rem"></Skeleton>
-        </div>
-      </div>
-      <div class="w-full xl:w-6/12 p-4">
-        <h5 class="mt-4">Circle</h5>
-        <div class="flex items-end">
-          <Skeleton shape="circle" size="2rem" class="mr-2"></Skeleton>
-          <Skeleton shape="circle" size="3rem" class="mr-2"></Skeleton>
-          <Skeleton shape="circle" size="4rem" class="mr-2"></Skeleton>
-          <Skeleton shape="circle" size="5rem"></Skeleton>
-        </div>
+    </div>
+
+    <div class="tv-show-row">
+      <!-- Detailed show information section -->
+      <div class="tv-show-column">
+        <h3>Details:</h3>
+        <BaseShowData label="Language" :showSkeleton="true" />
+        <BaseShowData label="Premiered" :showSkeleton="true" />
+        <BaseShowData label="Type" :showSkeleton="true" />
+        <BaseShowData label="Scheduled" :showSkeleton="true" />
       </div>
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.tv-show-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+/* Image spans the full left column */
+.tv-show-image-section {
+  grid-row: 1 / 3;
+  grid-column: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.tv-show-column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem;
+}
+/* Right column rows */
+.tv-show-row {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+}
+
+/* Responsive: stack layout on smaller screens */
+@media (max-width: 768px) {
+  .tv-show-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-auto-rows: auto;
+  }
+
+  .tv-show-image-section {
+    grid-column: 1;
+    grid-row: 1;
+    height: auto;
+  }
+
+  .tv-show-row {
+    grid-column: 1;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+}
+
+.tv-show-skeleton {
+  width: 100%;
+  margin: 0;
+}
+
+.tv-show-image-skeleton {
+  flex: 1;
+  min-height: 100%;
+}
+</style>

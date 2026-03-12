@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import Image from 'primevue/image';
 import type { TVShowImage } from '@/schemas/Shows';
 
@@ -9,14 +8,10 @@ interface IShowImageProps {
   showPreview: boolean;
 }
 const props = defineProps<IShowImageProps>();
-
-const showDefault = computed((): boolean =>
-  !props.image || (!props.image.medium && !props.image.original) ? false : true,
-);
 </script>
 
 <template>
-  <Image v-if="props.showPreview" preview class="show-image-preview">
+  <Image v-if="props.showPreview" preview class="tv-show-image-preview">
     <template #image>
       <img :src="props.image?.original" :alt="props.alt" class="tv-show-image-full" />
     </template>
@@ -37,28 +32,32 @@ const showDefault = computed((): boolean =>
   object-fit: cover;
 }
 
-.show-image-preview {
+.tv-show-image-preview {
+  flex: 1;
   width: 100%;
-  max-height: 600px;
   overflow: hidden;
   border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .tv-show-image-full {
   width: 100%;
-  max-width: 100%;
   height: auto;
-  max-height: 50vh;
+  max-height: 500px;
   display: block;
   border-radius: 0.5rem;
   object-fit: cover;
 }
 
-.show-image-preview :deep(.p-image),
-.show-image-preview :deep(.p-image-preview-container) {
+.tv-show-image-preview :deep(.p-image),
+.tv-show-image-preview :deep(.p-image-preview-container) {
+  flex: 1;
   width: 100%;
-  height: 100%;
-  max-height: 100%;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+  min-height: 0;
 }
 </style>

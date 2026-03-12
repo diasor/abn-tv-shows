@@ -12,6 +12,14 @@ export type TVShowImage = {
 export type TVShowRating = {
   average?: number;
 };
+
+/**
+ * TV Show schedule data structure.
+ */
+export type TVShowSchedule = {
+  time: string;
+  days: string[];
+};
 /**
  * TV Show data structure to be used in the TV Show Dashboard.
  */
@@ -36,6 +44,6 @@ export type TVShowDetails = TVShow & {
   runtime: number;
   ended: string | null;
   officialSite: string | null;
-  schedule: { time: string; days: string[] };
+  schedule: TVShowSchedule;
   summary: string;
 };

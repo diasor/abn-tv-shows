@@ -16,8 +16,7 @@ export const useShowDetailsStore = defineStore('showDetails', () => {
     try {
       const response = await fetchClient(`${API_SHOWS_BASE}/shows/${id}`);
       showDetails.value = response as TVShowDetails;
-      console.log('fetching details', showDetails.value);
-      await sleep(2000);
+      await sleep(4000); // this is only to show the skeleton
     } catch (error) {
       showDetails.value = {} as TVShowDetails;
     } finally {

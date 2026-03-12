@@ -93,7 +93,6 @@ const tabId = ref(props.tabSelected);
   :deep(.p-tabpanels) {
     font-size: 1rem;
     color: $color-lilac-dark;
-    background-color: aquamarine !important;
   }
 
   :deep(.p-tabpanels) {

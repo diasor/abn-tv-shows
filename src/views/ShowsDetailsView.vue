@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import Card from 'primevue/card';
 import ShowTabs from '@/components/show-details/ShowTabs.vue';
 import ShowDetailsMain from '@/components/show-details/ShowDetailsMain.vue';
@@ -16,9 +16,16 @@ const { selectedShow, isLoading } = storeToRefs(showDetailsStore);
 const { fetchShowDetails } = showDetailsStore;
 
 onMounted(async () => {
-  console.log('id', props.id);
   await fetchShowDetails(props.id);
-  console.log('selectedShow', selectedShow.value);
+});
+
+/** Formats the title for the TV show details page.
+ * If the selected show is not available or does not have a name, returns a default title.
+ * Otherwise, returns the show's name followed by "details".
+ */
+const formattedTitle = computed((): string => {
+  if (!selectedShow.value || !selectedShow.value.name) return 'TV Show Details';
+  return `${selectedShow.value.name}'s details`;
 });
 
 const tabSelected = ref('0');
@@ -27,7 +34,7 @@ const tabSelected = ref('0');
 <template>
   <Card class="show-details-card">
     <template #title>
-      <h1>TV Show Details</h1>
+      <h1>{{ formattedTitle }}</h1>
     </template>
     <template #content>
       <ShowTabs :tabSelected="tabSelected">

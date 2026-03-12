@@ -10,6 +10,9 @@ $color-lilac-medium: #7a5aa6;
 $color-lilac-light: #ece3fa;
 $background-color: rgba(122, 90, 166, 0.35);
 
+$color-golden: #d9b44a;
+$color-golden-darker: #d4a017;
+
 // backgrounds
 $background-gradient:
   linear-gradient(180deg, $vt-c-white 0%, #f0ecf3 100%) padding-box,
@@ -38,10 +41,10 @@ h3 {
   text-shadow: $font-text-shadow-playful;
 }
 h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 500;
   text-align: center;
-  margin: 2rem 0 0 0;
+  margin: 0;
 
   @media (max-width: 760px) {
     font-size: 1.5rem;
@@ -77,14 +80,15 @@ h3 {
   }
 }
 
-.label {
-  font-weight: 500;
-  font-size: 0.9rem;
+.tv-show-label {
+  font-weight: 700;
+  font-size: 0.8rem;
   color: $color-lilac-dark;
+  margin-right: 0.5rem;
 }
 
-.value {
+.tv-show-value {
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: $color-lilac-dark;
 }

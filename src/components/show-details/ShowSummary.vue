@@ -18,7 +18,7 @@ const formattedSummary = computed(() => {
 
 <template>
   <div class="tv-show-summary">
-    <h3 class="label">Summary:</h3>
+    <h3>Summary:</h3>
     <ScrollPanel
       style="width: 100%; height: 100px"
       :dt="{
@@ -36,6 +36,9 @@ const formattedSummary = computed(() => {
 .tv-show-summary {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
   font-size: 0.8rem;
   font-weight: 400;
   padding: 1rem;

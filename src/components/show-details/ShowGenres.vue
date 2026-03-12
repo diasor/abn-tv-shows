@@ -17,15 +17,15 @@ const showGenres = computed((): boolean =>
 </script>
 
 <template>
-  <div v-if="showGenres" class="genres-section">
-    <span class="label">Genres:</span>
-    <div class="genres-list flex flex-wrap">
+  <div v-if="showGenres" class="tv-show-genres-section">
+    <span class="tv-show-label tv-show-genres-span">Genres:</span>
+    <div class="tv-show-genres-list flex flex-wrap">
       <Badge
         v-for="genre in formattedGenres"
         :key="genre"
         :value="genre"
         severity="info"
-        class="genre-badge"
+        class="tv-show-genre-badge"
       />
     </div>
   </div>
@@ -34,21 +34,27 @@ const showGenres = computed((): boolean =>
 <style scoped lang="scss">
 @use '@/assets/theme' as *;
 
-.genres-section {
+.tv-show-genres-section {
   display: flex;
   width: 100%;
 }
 
-.genres-list {
+.tv-show-genres-span {
+  margin-right: 0;
+  flex-shrink: 0;
+}
+
+.tv-show-genres-list {
   display: flex;
   flex-wrap: wrap;
   flex: 1;
   gap: 0.5rem;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
-.genre-badge {
-  font-size: 0.7rem;
+.tv-show-genre-badge {
+  font-size: 0.8rem;
+  font-weight: 700 !important;
   padding: 0.2rem 0.4rem;
   margin: auto 0.2rem;
   background-color: $color-lilac-darker;
@@ -57,12 +63,12 @@ const showGenres = computed((): boolean =>
 
 /* Responsive design */
 @media (max-width: 480px) {
-  .genres-list {
+  .tv-show-genres-list {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .genre-badge {
+  .tv-show-genre-badge {
     align-self: flex-start;
   }
 }

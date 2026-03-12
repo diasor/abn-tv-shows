@@ -1,65 +1,64 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import Card from 'primevue/card';
-import ShowGenres from '@/components/show-details/ShowGenres.vue';
 import ShowImage from '@/components/show-details/ShowImage.vue';
+import BaseShowData from '@/components/base/BaseShowData.vue';
 import ShowRating from '@/components/show-details/ShowRating.vue';
-import type { TVShowImage, TVShowRating } from '@/schemas/Shows';
+import ShowGenres from '@/components/show-details/ShowGenres.vue';
+import type { TVShow } from '@/schemas/Shows';
+import { NOT_AVAILABLE } from '@/shared/api/constants';
 
 interface IShowProps {
-  name: string;
-  language?: string;
-  genres?: string[];
-  premiered?: string;
-  rating: TVShowRating;
-  image?: TVShowImage;
+  tvShow: TVShow;
 }
 const props = defineProps<IShowProps>();
 
+/** Formats the TV show premiered date into a human-readable string.
+ * If the premiered date is not available, returns 'N/A'.
+ * */
 const formattedPremiered = computed(() => {
-  if (!props.premiered) return 'N/A';
-  const date = new Date(props.premiered);
-  if (isNaN(date.getTime())) return 'N/A';
-  return date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+  if (!props.tvShow.premiered) return NOT_AVAILABLE;
+  const date = new Date(props.tvShow.premiered);
+  if (isNaN(date.getTime())) return NOT_AVAILABLE;
+  return date.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
 });
 </script>
 
 <template>
   <Card class="tv-show-tile">
     <template #title>
-      <h2>{{ props.name }}</h2>
+      <h2>{{ props.tvShow.name }}</h2>
     </template>
 
     <template #content>
       <div class="tv-show-content">
         <!-- Image section -->
-        <ShowImage :image="props.image" :alt="props.name" :showPreview="false" />
+        <ShowImage :image="props.tvShow.image" :alt="props.tvShow.name" :showPreview="false" />
 
         <div>
-          <!-- Language section -->
-          <div class="show-information-row">
-            <span class="label">Language:</span>
-            <span class="value" data-testid="show-language">
-              {{ props.language || 'N/A' }}
-            </span>
+          <div class="tv-show-information-row">
+            <BaseShowData
+              label="Language"
+              :value="props.tvShow.language"
+              dataTestId="show-language"
+            />
           </div>
-
-          <!-- Premiered section -->
-          <div class="show-information-row">
-            <span class="label">Premiered:</span>
-            <span class="value" data-testid="show-premiered">
-              {{ formattedPremiered }}
-            </span>
+          <div class="tv-show-information-row">
+            <BaseShowData
+              label="Premiered"
+              :value="formattedPremiered"
+              dataTestId="show-premiered"
+            />
           </div>
 
           <!-- Rating section -->
-          <div class="show-information-row">
-            <ShowRating :rating="props.rating" />
+          <div class="tv-show-information-row">
+            <ShowRating :rating="props.tvShow.rating" />
           </div>
 
           <!-- Genres section -->
-          <div class="show-information-row">
-            <ShowGenres :genres="props.genres" />
+          <div class="tv-show-information-row">
+            <ShowGenres :genres="props.tvShow.genres" />
           </div>
         </div>
       </div>
@@ -93,9 +92,9 @@ const formattedPremiered = computed(() => {
   overflow: hidden;
 }
 
-.show-information-row {
+.tv-show-information-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   flex: 1;
   padding: 0.25rem 0;

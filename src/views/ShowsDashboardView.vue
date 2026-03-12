@@ -9,7 +9,6 @@ const showsStore = useShowsStore();
 const router = useRouter();
 
 const goToShowDetails = (id: string | number) => {
-  console.log('Navigating to show details for ID:', id);
   router.push(`/show/${id}`);
 };
 
@@ -26,15 +25,7 @@ onMounted(() => {
     <template #content>
       <div class="shows-list">
         <div v-for="show in showsStore.visibleShows" :key="show.id" class="show-item">
-          <ShowsTile
-            :name="show.name"
-            :language="show.language"
-            :genres="show.genres"
-            :premiered="show.premiered"
-            :rating="show.rating"
-            :image="show.image"
-            @click.prevent="goToShowDetails(show.id)"
-          />
+          <ShowsTile :tvShow="show" @click.prevent="goToShowDetails(show.id)" />
         </div>
       </div>
     </template>
