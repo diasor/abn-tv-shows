@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import ShowsDashboardView from './ShowsDashboardView.vue';
 import ShowsTile from '@/components/shows/ShowsTile.vue';
-import { useShowsStore } from '@/stores/showsStore';
+import { useShowsStore } from '@/stores/useShowsStore';
 
 const tvShow1 = {
   name: 'Test Show 1',

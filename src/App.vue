@@ -8,7 +8,7 @@ import TheMenu from '@/components/the-menu/TheMenu.vue';
     <TheMenu />
   </header>
 
-  <main class="app-main-container flex flex-column flex-1 align-items-center justify-content-start">
+  <main class="app-main-container">
     <RouterView />
   </main>
 </template>
@@ -37,6 +37,6 @@ html {
 
 .app-main-container {
   width: calc(100% - 8rem);
-  margin: 2rem 4rem;
+  margin: auto 4rem;
 }
 </style>

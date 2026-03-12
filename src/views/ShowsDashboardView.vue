@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import Card from 'primevue/card';
-import ShowsTile from '@/components/shows/ShowsTile.vue';
-import { useShowsStore } from '@/stores/showsStore';
+import ShowsTile from '@/components/show-list/ShowsTile.vue';
+import { useShowsStore } from '@/stores/useShowsStore';
 
 const showsStore = useShowsStore();
+const router = useRouter();
+
+const goToShowDetails = (id: string | number) => {
+  console.log('Navigating to show details for ID:', id);
+  router.push(`/show/${id}`);
+};
 
 onMounted(() => {
   showsStore.fetchShows();
@@ -26,6 +33,7 @@ onMounted(() => {
             :premiered="show.premiered"
             :rating="show.rating"
             :image="show.image"
+            @click.prevent="goToShowDetails(show.id)"
           />
         </div>
       </div>
@@ -40,16 +48,6 @@ onMounted(() => {
   border-radius: 12px;
   background: $background-gradient;
   box-shadow: $box-shadow-gradient;
-}
-
-h1 {
-  font-size: 2.5rem;
-  font-weight: 500;
-  font-family: $font-playful;
-  color: $color-lilac-dark;
-  text-shadow: $font-text-shadow-playful;
-  text-align: center;
-  margin: 0 0 1.5rem 0;
 }
 
 .shows-list {
@@ -72,14 +70,14 @@ h1 {
 }
 
 /* 2 columns on medium screens */
-@media (min-width: 768px) and (max-width: 1199px) {
+@media (min-width: 900px) and (max-width: 1199px) {
   .shows-list {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 /* 1 column on small screens */
-@media (max-width: 767px) {
+@media (max-width: 899px) {
   .shows-list {
     grid-template-columns: 1fr;
     gap: 1rem;

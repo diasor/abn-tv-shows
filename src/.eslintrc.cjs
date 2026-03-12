@@ -15,5 +15,15 @@ module.exports = {
   rules: {
     semi: ['error', 'always'],
     '@typescript-eslint/semi': ['error', 'always'],
+    'vue/max-attributes-per-line': [
+      'error',
+      {
+        singleline: 1,
+        multiline: {
+          max: 1,
+          allowFirstLine: false,
+        },
+      },
+    ],
   },
 };

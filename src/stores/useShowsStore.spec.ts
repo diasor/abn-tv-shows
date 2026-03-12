@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { setActivePinia, createPinia } from 'pinia';
-import { useShowsStore } from '@/stores/showsStore';
+import { useShowsStore } from '@/stores/useShowsStore';
 import { fetchClient } from '@/shared/api/fetchClient';
 
 vi.mock('@/shared/api/fetchClient', () => ({
