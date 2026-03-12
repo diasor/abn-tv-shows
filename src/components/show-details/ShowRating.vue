@@ -10,6 +10,18 @@ interface IShowRatingProps {
 }
 const props = defineProps<IShowRatingProps>();
 
+/**
+ * Checks whether there is a proper rating available.
+ * It returns true if the average rating is not null, indicating that a rating exists for the show. If the average rating is null, it returns false, indicating that no rating is available.
+ * */
+const ratingAvailable = computed(() => props.rating?.average !== null);
+
+/**
+ * Transforms the API ratings from a scale of 0 to 10, to the
+ * scale required by the PrimeVuew component: a scale of 0 to 5.
+ * This computed divides the average rating by 2 to convert
+ * it to the correct scale for the Rating component.
+ */
 const formattedRating = computed(() =>
   props.rating?.average ? `${props.rating.average}/10` : NOT_AVAILABLE,
 );
@@ -20,6 +32,7 @@ const formattedRating = computed(() =>
   <div class="tv-show-container">
     <Badge :value="formattedRating" severity="success" class="tv-show-rating-badge" />
     <Rating
+      v-if="ratingAvailable"
       :modelValue="Math.round((props.rating?.average || 0) / 2)"
       :readonly="true"
       :cancel="false"

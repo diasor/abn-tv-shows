@@ -35,7 +35,7 @@ const formattedScheduled = computed(() => {
 
 <template>
   <div class="tv-show-info">
-    <h3 class="label">Details:</h3>
+    <h3 class="label">Details</h3>
     <div class="tv-show-information-grid">
       <div class="tv-show-information-column">
         <BaseShowData label="Language" :value="props.tvShow.language" dataTestId="show-language" />

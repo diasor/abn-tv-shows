@@ -1,29 +1,30 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
+import { Card } from 'primevue';
 import ShowsTile from './ShowsTile.vue';
 import ShowImage from '@/components/show-details/ShowImage.vue';
 import { NOT_AVAILABLE } from '@/shared/api/constants';
 import type { TVShow } from '@/schemas/Shows';
-import { Card } from 'primevue';
+
+const tvShowImage = {
+  medium: 'https://example.com/image.jpg',
+  original: 'https://example.com/imageOriginal.jpg',
+};
+
+const tvShow: TVShow = {
+  id: '1',
+  name: 'Test Show',
+  language: 'English',
+  genres: ['Drama', 'Action'],
+  premiered: '2020-01-15',
+  rating: { average: 8.5 },
+  url: '',
+  type: '',
+  image: tvShowImage,
+};
 
 describe('Testing ShowsTile component', () => {
-  const tvShowImage = {
-    medium: 'https://example.com/image.jpg',
-    original: 'https://example.com/imageOriginal.jpg',
-  };
-
-  const tvShow: TVShow = {
-    id: '1',
-    name: 'Test Show',
-    language: 'English',
-    genres: ['Drama', 'Action'],
-    premiered: '2020-01-15',
-    rating: { average: 8.5 },
-    url: '',
-    type: '',
-    image: tvShowImage,
-  };
   const createWrapper = (propsTvShow: TVShow) => {
     return mount(ShowsTile, {
       props: { tvShow: { ...propsTvShow } },

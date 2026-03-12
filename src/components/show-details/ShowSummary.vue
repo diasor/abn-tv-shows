@@ -7,6 +7,9 @@ interface IShowSummaryProps {
 }
 const props = defineProps<IShowSummaryProps>();
 
+/* Formats the summary text by removing any HTML tags and providing
+ * a default message if no summary is available.
+ */
 const formattedSummary = computed(() => {
   if (!props.summary) {
     return 'This show does not have a summary available.';
@@ -18,7 +21,7 @@ const formattedSummary = computed(() => {
 
 <template>
   <div class="tv-show-summary">
-    <h3>Summary:</h3>
+    <h3>Summary</h3>
     <ScrollPanel
       style="width: 100%; height: 100px"
       :dt="{

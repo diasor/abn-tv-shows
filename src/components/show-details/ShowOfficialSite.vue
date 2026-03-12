@@ -9,7 +9,7 @@ interface IShowSiteProps {
 const props = defineProps<IShowSiteProps>();
 
 /**
- * Formats the TV show official site into a human-readable string.
+ * Returns a boolean indicating whether the official site link is available and valid.
  * If the official site is not available, returns 'N/A'.
  */
 const showOfficialSite = computed((): boolean =>
@@ -33,7 +33,9 @@ const linkToOfficialSite = computed((): string =>
   >
     {{ props.linkName }}
   </a>
-  <span v-else class="tv-show-value" data-testid="show-official-site">{{ NOT_AVAILABLE }}</span>
+  <span v-else class="tv-show-value" data-testid="show-official-site">
+    {{ NOT_AVAILABLE }}
+  </span>
 </template>
 
 <style scoped lang="scss">
