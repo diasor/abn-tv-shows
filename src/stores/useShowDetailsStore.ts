@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
-import type { TVShowDetails } from '@/schemas/Shows';
+import type { TVShowDetails } from '@/schemas/shows';
 import { fetchClient } from '@/shared/api/fetchClient';
 import { API_SHOWS_BASE } from '@/shared/api/constants';
 

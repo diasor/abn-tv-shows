@@ -2,6 +2,7 @@
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Card from 'primevue/card';
+import Divider from 'primevue/divider';
 import ShowsTile from '@/components/show-list/ShowsTile.vue';
 import { useShowsStore } from '@/stores/useShowsStore';
 
@@ -23,9 +24,14 @@ onMounted(() => {
       <h1>TV Shows Dashboard</h1>
     </template>
     <template #content>
-      <div class="shows-list">
-        <div v-for="show in showsStore.visibleShows" :key="show.id" class="show-item">
-          <ShowsTile :tvShow="show" @click.prevent="goToShowDetails(show.id)" />
+      <div v-for="group in showsStore.showsByGenre" :key="group.genre" class="genre-section">
+        <Divider type="dashed" align="left" class="tv-show-divider">
+          <h2 class="genre-heading">{{ group.genre }}</h2>
+        </Divider>
+        <div class="shows-list">
+          <div v-for="show in group.shows" :key="show.id" class="show-item">
+            <ShowsTile :tvShow="show" @click.prevent="goToShowDetails(show.id)" />
+          </div>
         </div>
       </div>
     </template>
@@ -41,12 +47,32 @@ onMounted(() => {
   box-shadow: $box-shadow-gradient;
 }
 
+.genre-section {
+  padding: 0 2rem 1.5rem;
+}
+
+.tv-show-divider {
+  margin: 1rem 0;
+  color: $color-lilac-dark;
+  background-color: transparent;
+
+  :deep(.p-divider-content) {
+    background-color: transparent;
+  }
+}
+
+.genre-heading {
+  //   padding: 1rem 0 0;
+  text-align: left;
+  background-color: #fffff;
+}
+
 .shows-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 0.5fr));
   gap: 1.5rem;
   width: 100%;
-  padding: 2rem;
+  margin-top: 1.5rem;
 }
 
 .show-item {

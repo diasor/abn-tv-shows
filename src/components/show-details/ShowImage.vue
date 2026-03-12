@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Image from 'primevue/image';
-import type { TVShowImage } from '@/schemas/Shows';
+import type { TVShowImage } from '@/schemas/shows';
 
 interface IShowImageProps {
   image?: TVShowImage;

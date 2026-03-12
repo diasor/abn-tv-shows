@@ -66,6 +66,7 @@ a {
   font-family: $font-playful;
   color: $color-lilac-dark;
   text-shadow: $font-text-shadow-playful;
+  text-decoration: none;
 }
 
 a:hover {

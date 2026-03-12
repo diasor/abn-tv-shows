@@ -44,12 +44,12 @@ describe('Testing ShowGenres component', () => {
     });
   });
 
-  it('renders the first 3 genres, when more than 3 genres are provided', () => {
+  it('renders the first 2 genres, when more than 2 genres are provided', () => {
     // arrange
     const props = {
       genres: ['Drama', 'Action', 'Comedy', 'Thriller', 'Sci-Fi'],
     };
-    const expectedGenres = props.genres.slice(0, 3); // Show max 3 genres
+    const expectedGenres = props.genres.slice(0, 2); // Show max 3 genres
     const wrapper = createWrapper(props);
     const badgeComponents = wrapper.findAllComponents(Badge);
     // assert

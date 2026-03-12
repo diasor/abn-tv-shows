@@ -9,7 +9,11 @@ import { tvShow1, tvShow2 } from '@/mocks/testing-data';
 
 vi.mock('@/stores/useShowsStore', () => ({
   useShowsStore: vi.fn(() => ({
-    visibleShows: [tvShow1, tvShow2],
+    // Comedy (tvShow2) before Drama (tvShow1) — alphabetical genre order
+    showsByGenre: [
+      { genre: 'Comedy', shows: [tvShow2] },
+      { genre: 'Drama', shows: [tvShow1] },
+    ],
     fetchShows: vi.fn(),
   })),
 }));
@@ -49,17 +53,17 @@ describe('Testing ShowsDashboardView', () => {
       // arrange & act
       const wrapper = createWrapper();
       const tvShowComponents = wrapper.findAllComponents(ShowsTile);
-      // assert
+      // assert — Comedy (tvShow2) is first, Drama (tvShow1) is second (alphabetical genre order)
       expect(tvShowComponents).toHaveLength(2);
-      expect(tvShowComponents[0]?.props('tvShow')).toEqual(tvShow1);
-      expect(tvShowComponents[1]?.props('tvShow')).toEqual(tvShow2);
+      expect(tvShowComponents[0]?.props('tvShow')).toEqual(tvShow2);
+      expect(tvShowComponents[1]?.props('tvShow')).toEqual(tvShow1);
     });
 
     it('renders no ShowsTile components when no shows are available', () => {
       // arrange
       const mockUseShowsStore = vi.mocked(useShowsStore);
       mockUseShowsStore.mockReturnValue({
-        visibleShows: [],
+        showsByGenre: [],
         fetchShows: vi.fn(),
       } as unknown as ReturnType<typeof useShowsStore>);
       // act

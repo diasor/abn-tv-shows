@@ -12,7 +12,7 @@ const props = defineProps<IShowGenresProps>();
  * If there are no genres, it will return an empty array.
  */
 const formattedGenres = computed(
-  () => props.genres?.slice(0, 3) || [], // Show max 3 genres
+  () => props.genres?.slice(0, 2) || [], // Show max 2 genres
 );
 
 /* Returns true if there are genres to display.

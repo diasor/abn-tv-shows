@@ -5,7 +5,7 @@ import { Card } from 'primevue';
 import ShowsTile from './ShowsTile.vue';
 import ShowImage from '@/components/show-details/ShowImage.vue';
 import { NOT_AVAILABLE } from '@/shared/api/constants';
-import type { TVShow } from '@/schemas/Shows';
+import type { TVShow } from '@/schemas/shows';
 import { tvShowImage, tvShow1 } from '@/mocks/testing-data';
 
 describe('Testing ShowsTile component', () => {

@@ -5,7 +5,7 @@ import ShowImage from '@/components/show-details/ShowImage.vue';
 import BaseShowData from '@/components/base/BaseShowData.vue';
 import ShowRating from '@/components/show-details/ShowRating.vue';
 import ShowGenres from '@/components/show-details/ShowGenres.vue';
-import type { TVShow } from '@/schemas/Shows';
+import type { TVShow } from '@/schemas/shows';
 import { NOT_AVAILABLE } from '@/shared/api/constants';
 
 interface IShowProps {

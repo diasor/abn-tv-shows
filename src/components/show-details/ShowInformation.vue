@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { TVShowDetails, TVShowSchedule } from '@/schemas/Shows';
+import type { TVShowDetails, TVShowSchedule } from '@/schemas/shows';
 import ShowRating from '@/components/show-details/ShowRating.vue';
 import ShowGenres from '@/components/show-details/ShowGenres.vue';
 import ShowOfficialSite from '@/components/show-details/ShowOfficialSite.vue';

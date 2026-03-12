@@ -4,7 +4,7 @@ import ShowDetailsSkeleton from '@/components/show-details/ShowDetailsSkeleton.v
 import ShowImage from '@/components/show-details/ShowImage.vue';
 import ShowSummary from '@/components/show-details/ShowSummary.vue';
 import ShowInformation from '@/components/show-details/ShowInformation.vue';
-import type { TVShowDetails } from '@/schemas/Shows';
+import type { TVShowDetails } from '@/schemas/shows';
 
 interface IShowDetailsProps {
   tvShow: TVShowDetails;
