@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import Card from 'primevue/card';
-import ShowsTile from '@/components/shows/ShowsTile.vue';
-import { useShowsStore } from '@/stores/showsStore';
+import Divider from 'primevue/divider';
+import ShowsTile from '@/components/show-list/ShowsTile.vue';
+import { useShowsStore } from '@/stores/useShowsStore';
 
 const showsStore = useShowsStore();
+const router = useRouter();
+
+const goToShowDetails = (id: string | number) => {
+  router.push(`/show/${id}`);
+};
 
 onMounted(() => {
   showsStore.fetchShows();
@@ -17,16 +24,14 @@ onMounted(() => {
       <h1>TV Shows Dashboard</h1>
     </template>
     <template #content>
-      <div class="shows-list">
-        <div v-for="show in showsStore.visibleShows" :key="show.id" class="show-item">
-          <ShowsTile
-            :name="show.name"
-            :language="show.language"
-            :genres="show.genres"
-            :premiered="show.premiered"
-            :rating="show.rating"
-            :image="show.image"
-          />
+      <div v-for="group in showsStore.showsByGenre" :key="group.genre" class="genre-section">
+        <Divider type="dashed" align="left" class="tv-show-divider">
+          <h2 class="genre-heading">{{ group.genre }}</h2>
+        </Divider>
+        <div class="shows-list">
+          <div v-for="show in group.shows" :key="show.id" class="show-item">
+            <ShowsTile :tvShow="show" @click.prevent="goToShowDetails(show.id)" />
+          </div>
         </div>
       </div>
     </template>
@@ -42,14 +47,24 @@ onMounted(() => {
   box-shadow: $box-shadow-gradient;
 }
 
-h1 {
-  font-size: 2.5rem;
-  font-weight: 500;
-  font-family: $font-playful;
+.genre-section {
+  padding: 0 2rem 1.5rem;
+}
+
+.tv-show-divider {
+  margin: 1rem 0;
   color: $color-lilac-dark;
-  text-shadow: $font-text-shadow-playful;
-  text-align: center;
-  margin: 0 0 1.5rem 0;
+  background-color: transparent;
+
+  :deep(.p-divider-content) {
+    background-color: transparent;
+  }
+}
+
+.genre-heading {
+  //   padding: 1rem 0 0;
+  text-align: left;
+  background-color: #fffff;
 }
 
 .shows-list {
@@ -57,7 +72,7 @@ h1 {
   grid-template-columns: repeat(auto-fill, minmax(200px, 0.5fr));
   gap: 1.5rem;
   width: 100%;
-  padding: 2rem;
+  margin-top: 1.5rem;
 }
 
 .show-item {
@@ -72,14 +87,14 @@ h1 {
 }
 
 /* 2 columns on medium screens */
-@media (min-width: 768px) and (max-width: 1199px) {
+@media (min-width: 900px) and (max-width: 1199px) {
   .shows-list {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 /* 1 column on small screens */
-@media (max-width: 767px) {
+@media (max-width: 899px) {
   .shows-list {
     grid-template-columns: 1fr;
     gap: 1rem;

@@ -12,7 +12,9 @@
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@use '@/assets/theme' as *;
+
 .item {
   margin-top: 2rem;
   display: flex;
@@ -22,6 +24,10 @@
 .details {
   flex: 1;
   margin-left: 1rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  //   font-family: $font-playful;
+  color: $color-lilac-dark;
 }
 
 i {
@@ -30,15 +36,7 @@ i {
   place-content: center;
   width: 32px;
   height: 32px;
-
-  color: var(--color-text);
-}
-
-h3 {
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin-bottom: 0.4rem;
-  color: var(--color-heading);
+  color: $color-lilac-dark;
 }
 
 @media (min-width: 1024px) {
@@ -51,8 +49,8 @@ h3 {
     top: calc(50% - 25px);
     left: -26px;
     position: absolute;
-    border: 1px solid var(--color-border);
-    background: var(--color-background);
+    border: 1px solid $color-lilac-darker;
+    background: $color-lilac-light;
     border-radius: 8px;
     width: 50px;
     height: 50px;
@@ -60,7 +58,7 @@ h3 {
 
   .item:before {
     content: ' ';
-    border-left: 1px solid var(--color-border);
+    border-left: 1px solid $color-lilac-dark;
     position: absolute;
     left: 0;
     bottom: calc(50% + 25px);
@@ -69,7 +67,7 @@ h3 {
 
   .item:after {
     content: ' ';
-    border-left: 1px solid var(--color-border);
+    border-left: 1px solid $color-lilac-dark;
     position: absolute;
     left: 0;
     top: calc(50% + 25px);

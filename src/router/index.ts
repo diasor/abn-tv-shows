@@ -10,6 +10,8 @@ const router = createRouter({
     },
     {
       path: '/show/:id',
+      name: 'show-details',
+      props: true,
       component: () => import('@/views/ShowsDetailsView.vue'),
     },
     {
