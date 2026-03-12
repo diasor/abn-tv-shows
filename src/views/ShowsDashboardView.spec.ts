@@ -1,8 +1,9 @@
-import { vi, describe, it, expect } from 'vitest';
+import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { setActivePinia, createPinia } from 'pinia';
 import PrimeVue from 'primevue/config';
 import ShowsDashboardView from './ShowsDashboardView.vue';
-import ShowsTile from '@/components/shows/ShowsTile.vue';
+import ShowsTile from '@/components/show-list/ShowsTile.vue';
 import { useShowsStore } from '@/stores/useShowsStore';
 
 const tvShow1 = {
@@ -21,12 +22,17 @@ const tvShow2 = {
   rating: { average: 9.0 },
   image: { medium: 'https://example.com/image.jpg' },
 };
-vi.mock('@/stores/showsStore', () => ({
+vi.mock('@/stores/useShowsStore', () => ({
   useShowsStore: vi.fn(() => ({
     visibleShows: [tvShow1, tvShow2],
     fetchShows: vi.fn(),
   })),
 }));
+
+beforeEach(() => {
+  setActivePinia(createPinia());
+  vi.clearAllMocks();
+});
 
 describe('Testing ShowsDashboardView', () => {
   const createWrapper = () => {
@@ -37,7 +43,7 @@ describe('Testing ShowsDashboardView', () => {
     });
   };
 
-  it('renders Card component', () => {
+  it('renders a Card component', () => {
     // arrange & act
     const wrapper = createWrapper();
     // assert
@@ -53,15 +59,15 @@ describe('Testing ShowsDashboardView', () => {
     expect(h1.text()).toBe('TV Shows Dashboard');
   });
 
-  describe('Testing the ShowTitle components', () => {
+  describe('Testing the ShowTitle component', () => {
     it('renders 2 ShowsTitle components with the correct data, when there are 2 shows in the state', () => {
       // arrange & act
       const wrapper = createWrapper();
       const tvShowComponents = wrapper.findAllComponents(ShowsTile);
       // assert
       expect(tvShowComponents).toHaveLength(2);
-      expect(tvShowComponents[0]?.props()).toMatchObject(tvShow1);
-      expect(tvShowComponents[1]?.props()).toMatchObject(tvShow2);
+      expect(tvShowComponents[0]?.props('tvShow')).toEqual(tvShow1);
+      expect(tvShowComponents[1]?.props('tvShow')).toEqual(tvShow2);
     });
 
     it('renders no ShowsTile components when no shows are available', () => {

@@ -10,6 +10,7 @@ export default mergeConfig(
     test: {
       globals: true,
       environment: 'jsdom',
+      setupFiles: ['src/test/setup.ts'],
       exclude: [...configDefaults.exclude, 'node_modules/', 'src/main.ts', '__tests__/e2e/**'],
       root: fileURLToPath(new URL('./', import.meta.url)),
       coverage: {

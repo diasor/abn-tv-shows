@@ -13,6 +13,16 @@ interface IShowProps {
 }
 const props = defineProps<IShowProps>();
 
+/* Determines if the TV show has a valid image to display.
+ * It checks if the 'medium' image URL is defined and not empty.
+ * Returns true if a valid image is available, otherwise false. */
+const showImage = computed(
+  (): boolean =>
+    props.tvShow.image?.medium !== undefined &&
+    props.tvShow.image?.medium !== '' &&
+    props.tvShow.image?.medium !== null,
+);
+
 /** Formats the TV show premiered date into a human-readable string.
  * If the premiered date is not available, returns 'N/A'.
  * */
@@ -33,10 +43,15 @@ const formattedPremiered = computed(() => {
     <template #content>
       <div class="tv-show-content">
         <!-- Image section -->
-        <ShowImage :image="props.tvShow.image" :alt="props.tvShow.name" :showPreview="false" />
-
+        <ShowImage
+          v-if="showImage"
+          :image="props.tvShow.image"
+          :alt="props.tvShow.name"
+          :showPreview="false"
+        />
         <div>
           <div class="tv-show-information-row">
+            <!-- Language section -->
             <BaseShowData
               label="Language"
               :value="props.tvShow.language"
@@ -44,18 +59,17 @@ const formattedPremiered = computed(() => {
             />
           </div>
           <div class="tv-show-information-row">
+            <!-- Premiered section -->
             <BaseShowData
               label="Premiered"
               :value="formattedPremiered"
               dataTestId="show-premiered"
             />
           </div>
-
           <!-- Rating section -->
           <div class="tv-show-information-row">
             <ShowRating :rating="props.tvShow.rating" />
           </div>
-
           <!-- Genres section -->
           <div class="tv-show-information-row">
             <ShowGenres :genres="props.tvShow.genres" />

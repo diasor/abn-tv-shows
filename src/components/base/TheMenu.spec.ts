@@ -1,9 +1,10 @@
 import { describe, it, expect, beforeAll, beforeEach, vi } from 'vitest';
 import { mount, flushPromises } from '@vue/test-utils';
-import { createRouter, createMemoryHistory, type Router } from 'vue-router';
-import Menubar from 'primevue/menubar';
 import PrimeVue from 'primevue/config';
+import InputText from 'primevue/inputtext';
+import Menubar from 'primevue/menubar';
 import TheMenu from './TheMenu.vue';
+import { routerPushMock } from '@/test/setup';
 
 beforeAll(() => {
   Object.defineProperty(window, 'matchMedia', {
@@ -21,25 +22,15 @@ beforeAll(() => {
   });
 });
 
-let mockRouter: Router;
-
-beforeEach(async () => {
-  mockRouter = createRouter({
-    history: createMemoryHistory(),
-    routes: [
-      { path: '/', name: 'home', component: { template: '<div>Home</div>' } },
-      { path: '/about', name: 'about', component: { template: '<div>About</div>' } },
-    ],
-  });
-  await mockRouter.push('/');
-  await mockRouter.isReady();
+beforeEach(() => {
+  routerPushMock.mockReset();
 });
 
-describe('Testing TheMenu', () => {
+describe('Testing TheMenu component', () => {
   const createWrapper = () => {
     return mount(TheMenu, {
       global: {
-        plugins: [PrimeVue, mockRouter],
+        plugins: [PrimeVue],
       },
     });
   };
@@ -83,7 +74,7 @@ describe('Testing TheMenu', () => {
     await homeLink?.trigger('click');
     await flushPromises();
     // assert
-    expect(mockRouter.currentRoute.value.path).toBe('/');
+    expect(routerPushMock).toHaveBeenCalledWith('/');
   });
 
   it('navigates to About when About link is clicked', async () => {
@@ -94,14 +85,14 @@ describe('Testing TheMenu', () => {
     await aboutLink?.trigger('click');
     await flushPromises();
     // assert
-    expect(mockRouter.currentRoute.value.path).toBe('/about');
+    expect(routerPushMock).toHaveBeenCalledWith('/about');
   });
 
-  it('renders the search input in the end slot', () => {
+  it('renders the search input', () => {
     // arrange & act
     const wrapper = createWrapper();
-    const input = wrapper.find('input');
+    const inputText = wrapper.findComponent(InputText);
     // assert
-    expect(input.exists()).toBe(true);
+    expect(inputText.exists()).toBe(true);
   });
 });
