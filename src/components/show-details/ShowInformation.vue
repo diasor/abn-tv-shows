@@ -38,15 +38,15 @@ const formattedScheduled = computed(() => {
     <h3 class="label">Details</h3>
     <div class="tv-show-information-grid">
       <div class="tv-show-information-column">
-        <BaseShowData label="Language" :value="props.tvShow.language" dataTestId="show-language" />
+        <BaseShowData label="Language" :value="props.tvShow?.language" dataTestId="show-language" />
         <BaseShowData label="Premiered" :value="formattedPremiered" dataTestId="show-premiered" />
-        <BaseShowData label="Type" :value="props.tvShow.type" dataTestId="show-type" />
+        <BaseShowData label="Type" :value="props.tvShow?.type" dataTestId="show-type" />
         <BaseShowData label="Scheduled" :value="formattedScheduled" dataTestId="show-scheduled" />
       </div>
 
       <div class="tv-show-information-column">
         <div class="tv-show-information-row">
-          <ShowOfficialSite :linkName="props.tvShow.name" :linkRef="props.tvShow.officialSite" />
+          <ShowOfficialSite :linkName="props.tvShow?.name" :linkRef="props.tvShow?.officialSite" />
         </div>
         <BaseShowData label="Status" :value="props.tvShow.status" dataTestId="show-status" />
 

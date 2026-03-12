@@ -30,6 +30,7 @@ const tabId = ref(props.tabSelected);
         <span>Photos</span>
       </Tab>
     </TabList>
+
     <TabPanels class="tv-show-tabpanels">
       <TabPanel value="0" as="div" class="m-0">
         <slot name="main">Default main content</slot>

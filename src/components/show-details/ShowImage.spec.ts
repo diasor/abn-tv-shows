@@ -3,12 +3,10 @@ import { mount, flushPromises } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Image from 'primevue/image';
 import ShowImage from './ShowImage.vue';
+import { tvShowImage } from '@/mocks/testing-data';
 
 const defaultProps = {
-  image: {
-    medium: 'https://example.com/image.jpg',
-    original: 'https://example.com/image.jpg',
-  },
+  image: tvShowImage,
   alt: 'image alt text',
   dataTestId: 'show-image',
   showPreview: true,

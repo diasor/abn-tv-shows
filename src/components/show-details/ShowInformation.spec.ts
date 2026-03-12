@@ -6,31 +6,14 @@ import BaseShowData from '@/components/base/BaseShowData.vue';
 import ShowOfficialSite from '@/components/show-details/ShowOfficialSite.vue';
 import ShowRating from '@/components/show-details/ShowRating.vue';
 import ShowGenres from '@/components/show-details/ShowGenres.vue';
-import type { TVShowDetails } from '@/schemas/Shows';
-
-const tvShow: TVShowDetails = {
-  id: '1',
-  name: 'Test Show',
-  language: 'English',
-  genres: ['Drama', 'Action'],
-  premiered: '2020-01-15',
-  rating: { average: 8.5 },
-  url: '',
-  type: '',
-  ended: '2020-01-01',
-  image: { medium: 'https://example.com/image.jpg' },
-  status: 'Ended',
-  runtime: 60,
-  officialSite: '',
-  schedule: {
-    time: '20',
-    days: ['Monday'],
-  },
-  summary: 'show summary',
-};
+import { NOT_AVAILABLE } from '@/shared/api/constants';
+import { tvShowComplete } from '@/mocks/testing-data';
 
 const defaultProps = {
-  tvShow,
+  tvShow: tvShowComplete,
+};
+const tvShowWithMissingData = {
+  ...tvShowComplete,
 };
 
 describe('Testing ShowInformation component', () => {
@@ -52,23 +35,76 @@ describe('Testing ShowInformation component', () => {
     expect(h3Element.text()).toBe('Details');
   });
 
-  it('renders 1 BaseShowData component with the Language information', () => {
-    // arrange & act
-    const wrapper = createWrapper();
-    const allShowDataComponent = wrapper.findAllComponents(BaseShowData);
-    // assert
-    expect(allShowDataComponent).toHaveLength(5);
-    expect(allShowDataComponent[0]?.props('label')).toBe('Language');
-    expect(allShowDataComponent[0]?.props('value')).toBe(tvShow.language);
+  describe('Testing Language', () => {
+    it('renders 1 BaseShowData component with the Language information', () => {
+      // arrange & act
+      const wrapper = createWrapper();
+      const allShowDataComponent = wrapper.findAllComponents(BaseShowData);
+      // assert
+      expect(allShowDataComponent).toHaveLength(5);
+      expect(allShowDataComponent[0]?.props('label')).toBe('Language');
+      expect(allShowDataComponent[0]?.props('value')).toBe(tvShowComplete.language);
+    });
+
+    it('renders "N/A" for missing Language information', () => {
+      // arrange & act
+      // @ts-expect-error - test intentionally removes required field
+      delete tvShowWithMissingData.language;
+      const propsWithMissingData = {
+        tvShow: tvShowWithMissingData,
+      };
+      const wrapper = createWrapper(propsWithMissingData);
+      const allShowDataComponent = wrapper.findAllComponents(BaseShowData);
+      const languageSpan = wrapper.find('[data-testid="show-language"]');
+      // assert
+      expect(allShowDataComponent[0]?.props('label')).toBe('Language');
+      expect(allShowDataComponent[0]?.props('value')).toBe(undefined);
+      expect(languageSpan.text()).toBe(NOT_AVAILABLE);
+    });
   });
 
-  it('renders 1 BaseShowData component with the Premiered information', () => {
-    // arrange & act
-    const wrapper = createWrapper();
-    const allShowDataComponent = wrapper.findAllComponents(BaseShowData);
-    // assert
-    expect(allShowDataComponent[1]?.props('label')).toBe('Premiered');
-    expect(allShowDataComponent[1]?.props('value')).toBe('January 15, 2020');
+  describe('Testing Premiered', () => {
+    it('renders 1 BaseShowData component, when the Premiered information is provided', () => {
+      // arrange & act
+      const wrapper = createWrapper();
+      const allShowDataComponent = wrapper.findAllComponents(BaseShowData);
+      // assert
+      expect(allShowDataComponent[1]?.props('label')).toBe('Premiered');
+      expect(allShowDataComponent[1]?.props('value')).toBe('January 15, 2020');
+    });
+
+    it('renders "N/A" for Premiered information, when the Premiered information is undefined', () => {
+      // arrange
+      const tvShowWithoutPremiered = {
+        ...tvShowComplete,
+        premiered: undefined,
+      };
+      const propsWithoutPremiered = {
+        tvShow: tvShowWithoutPremiered,
+      };
+      // @ts-expect-error - test intentionally removes required field
+      const wrapper = createWrapper(propsWithoutPremiered);
+      const allShowDataComponent = wrapper.findAllComponents(BaseShowData);
+      // assert
+      expect(allShowDataComponent[1]?.props('label')).toBe('Premiered');
+      expect(allShowDataComponent[1]?.props('value')).toBe(NOT_AVAILABLE);
+    });
+
+    it('renders "N/A" for Premiered information, when the Premiered is not a date', () => {
+      // arrange
+      const tvShowWithoutPremiered = {
+        ...tvShowComplete,
+        premiered: 'Not a date',
+      };
+      const propsWithoutPremiered = {
+        tvShow: tvShowWithoutPremiered,
+      };
+      const wrapper = createWrapper(propsWithoutPremiered);
+      const allShowDataComponent = wrapper.findAllComponents(BaseShowData);
+      // assert
+      expect(allShowDataComponent[1]?.props('label')).toBe('Premiered');
+      expect(allShowDataComponent[1]?.props('value')).toBe(NOT_AVAILABLE);
+    });
   });
 
   it('renders 1 BaseShowData component with the Type information', () => {
@@ -77,7 +113,35 @@ describe('Testing ShowInformation component', () => {
     const allShowDataComponent = wrapper.findAllComponents(BaseShowData);
     // assert
     expect(allShowDataComponent[2]?.props('label')).toBe('Type');
-    expect(allShowDataComponent[2]?.props('value')).toBe(tvShow.type);
+    expect(allShowDataComponent[2]?.props('value')).toBe(tvShowComplete.type);
+  });
+
+  describe('Testing Scheduled', () => {
+    it('renders 1 BaseShowData component with the Scheduled information, when the Scheduled information is provided', () => {
+      // arrange & act
+      const wrapper = createWrapper();
+      const allShowDataComponent = wrapper.findAllComponents(BaseShowData);
+      // assert
+      expect(allShowDataComponent[3]?.props('label')).toBe('Scheduled');
+      expect(allShowDataComponent[3]?.props('value')).toBe('Monday at 20');
+    });
+
+    it('renders "N/A" for missing Scheduled information', () => {
+      // arrange & act
+      const tvShowWithMissingData = { ...tvShowComplete };
+      // @ts-expect-error - test intentionally removes required field
+      delete tvShowWithMissingData.schedule;
+      const propsWithMissingData = {
+        tvShow: tvShowWithMissingData,
+      };
+      const wrapper = createWrapper(propsWithMissingData);
+      const allShowDataComponent = wrapper.findAllComponents(BaseShowData);
+      const scheduledSpan = wrapper.find('[data-testid="show-scheduled"]');
+      // assert
+      expect(allShowDataComponent[3]?.props('label')).toBe('Scheduled');
+      expect(allShowDataComponent[3]?.props('value')).toBe(NOT_AVAILABLE);
+      expect(scheduledSpan.text()).toBe(NOT_AVAILABLE);
+    });
   });
 
   it('renders 1 ShowOfficialSite component', () => {

@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
-import ScrollPanel from 'primevue/scrollpanel';
 import ShowOfficialSite from '@/components/show-details/ShowOfficialSite.vue';
 
 const defaultProps = {

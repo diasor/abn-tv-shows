@@ -11,6 +11,11 @@ export const useShowDetailsStore = defineStore('showDetails', () => {
 
   const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+  /**
+   * Fetches the details of a TV show by its ID and
+   * updates the state accordingly.
+   * @param id - The ID of the TV show to fetch details for.
+   */
   const fetchShowDetails = async (id: string): Promise<void> => {
     isLoading.value = true;
     try {

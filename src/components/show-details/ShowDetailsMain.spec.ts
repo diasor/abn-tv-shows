@@ -6,32 +6,10 @@ import ShowDetailsSkeleton from '@/components/show-details/ShowDetailsSkeleton.v
 import ShowImage from '@/components/show-details/ShowImage.vue';
 import ShowSummary from '@/components/show-details/ShowSummary.vue';
 import ShowInformation from '@/components/show-details/ShowInformation.vue';
-
-import type { TVShowDetails } from '@/schemas/Shows';
-
-const tvShow: TVShowDetails = {
-  id: '1',
-  name: 'Test Show',
-  language: 'English',
-  genres: ['Drama', 'Action'],
-  premiered: '2020-01-15',
-  rating: { average: 8.5 },
-  url: '',
-  type: '',
-  ended: '2020-01-01',
-  image: { medium: 'https://example.com/image.jpg' },
-  status: 'Ended',
-  runtime: 60,
-  officialSite: '',
-  schedule: {
-    time: '20',
-    days: ['Monday'],
-  },
-  summary: 'show summary',
-};
+import { tvShowComplete } from '@/mocks/testing-data';
 
 const defaultProps = {
-  tvShow,
+  tvShow: tvShowComplete,
   isLoading: false,
 };
 

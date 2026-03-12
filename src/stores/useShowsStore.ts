@@ -15,6 +15,11 @@ export const useShowsStore = defineStore('shows', () => {
     return shows.value.filter((show) => show.genres.includes(selectedGenre.value));
   });
 
+  /**
+   * Fetches the all available TV shows, paginating and
+   * updates the state accordingly.
+   * @param page - The page number to fetch.
+   */
   const fetchShows = async (page: number = 1): Promise<void> => {
     isLoading.value = true;
     try {

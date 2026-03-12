@@ -5,23 +5,8 @@ import PrimeVue from 'primevue/config';
 import ShowsDashboardView from './ShowsDashboardView.vue';
 import ShowsTile from '@/components/show-list/ShowsTile.vue';
 import { useShowsStore } from '@/stores/useShowsStore';
+import { tvShow1, tvShow2 } from '@/mocks/testing-data';
 
-const tvShow1 = {
-  name: 'Test Show 1',
-  language: 'English',
-  genres: ['Drama'],
-  premiered: '2020-01-01',
-  rating: { average: 8.0 },
-  image: { medium: 'https://example.com/image.jpg' },
-};
-const tvShow2 = {
-  name: 'Test Show 2',
-  language: 'Dutch',
-  genres: ['Comedy'],
-  premiered: '2016-12-01',
-  rating: { average: 9.0 },
-  image: { medium: 'https://example.com/image.jpg' },
-};
 vi.mock('@/stores/useShowsStore', () => ({
   useShowsStore: vi.fn(() => ({
     visibleShows: [tvShow1, tvShow2],

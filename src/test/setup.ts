@@ -2,6 +2,22 @@ import { config } from '@vue/test-utils';
 import { beforeEach, vi } from 'vitest';
 import { defineComponent, h } from 'vue';
 
+class ResizeObserverMock {
+  observe() {
+    // no-op for jsdom tests
+  }
+
+  unobserve() {
+    // no-op for jsdom tests
+  }
+
+  disconnect() {
+    // no-op for jsdom tests
+  }
+}
+
+vi.stubGlobal('ResizeObserver', ResizeObserverMock);
+
 export const routerPushMock = vi.fn();
 export const routerReplaceMock = vi.fn();
 
