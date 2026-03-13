@@ -3,10 +3,11 @@ import { defineStore, storeToRefs } from 'pinia';
 import type { TVShow } from '@/schemas/shows';
 import { Genre } from '@/schemas/genres';
 import { fetchClient } from '@/shared/api/fetchClient';
-import { API_SHOWS_BASE } from '@/shared/api/constants';
 import { useGenreStore } from '@/stores/useGenreStore';
 import { usePaginationStore } from '@/stores/usePaginationStore';
 import { useShowDetailsStore } from '@/stores/useShowDetailsStore';
+import { API_SHOWS_BASE } from '@/shared/api/constants';
+import { sleep } from '@/shared/utilities';
 
 export const useShowsStore = defineStore('shows', () => {
   /**
@@ -105,6 +106,7 @@ export const useShowsStore = defineStore('shows', () => {
     resetShowDetails();
     try {
       const response = await fetchClient(`${API_SHOWS_BASE}/shows`);
+      await sleep(3000); // this is only to show the skeleton
       allShows.value = response as TVShow[];
       setTotalRecords(totalFilteredShows.value);
     } catch (error) {

@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 import type { TVShowDetails } from '@/schemas/shows';
 import { fetchClient } from '@/shared/api/fetchClient';
 import { API_SHOWS_BASE } from '@/shared/api/constants';
+import { sleep } from '@/shared/utilities';
 
 export const useShowDetailsStore = defineStore('showDetails', () => {
   /**
@@ -29,8 +30,6 @@ export const useShowDetailsStore = defineStore('showDetails', () => {
     showDetails.value = {} as TVShowDetails;
   };
 
-  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
   /**
    * Fetches the details of a TV show by its ID and
    * updates the state accordingly.
@@ -40,7 +39,7 @@ export const useShowDetailsStore = defineStore('showDetails', () => {
     isLoading.value = true;
     try {
       const response = await fetchClient(`${API_SHOWS_BASE}/shows/${id}`);
-      await sleep(4000); // this is only to show the skeleton
+      await sleep(3000); // this is only to show the skeleton
       showDetails.value = response as TVShowDetails;
     } catch (error) {
       showDetails.value = {} as TVShowDetails;
