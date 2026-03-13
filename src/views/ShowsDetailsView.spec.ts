@@ -63,7 +63,7 @@ describe('Testing ShowsDetailsView view', () => {
       fetchShowDetails: vi.fn(),
     } as unknown as ReturnType<typeof useShowDetailsStore>);
     const wrapper = createWrapper();
-    const expectedHeading = 'TV Show Details';
+    const expectedHeading = 'TV show details loading...';
     const h1 = wrapper.find('h1');
     // assert
     expect(h1.exists()).toBe(true);

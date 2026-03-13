@@ -5,9 +5,29 @@ import { fetchClient } from '@/shared/api/fetchClient';
 import { API_SHOWS_BASE } from '@/shared/api/constants';
 
 export const useShowDetailsStore = defineStore('showDetails', () => {
+  /**
+   * Indicates whether the current tv show is currently being loaded.
+   * It controls the skeleton for the main dashboard.
+   */
   const isLoading = ref(false);
+
+  /**
+   * Stores the details of the current TV show.
+   * It is updated when fetching the details of a specific show.
+   */
   const showDetails = ref<TVShowDetails>({} as TVShowDetails);
+
+  /**
+   * Returns the current selected TV show.
+   */
   const selectedShow = computed(() => showDetails.value);
+
+  /**
+   * Resets the selected tv show.
+   */
+  const resetShowDetails = () => {
+    showDetails.value = {} as TVShowDetails;
+  };
 
   const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -32,6 +52,7 @@ export const useShowDetailsStore = defineStore('showDetails', () => {
   return {
     selectedShow,
     fetchShowDetails,
+    resetShowDetails,
     isLoading,
   };
 });

@@ -2,6 +2,11 @@
 @use './theme' as *;
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
+:root {
+  --p-skeleton-background: #{$color-lilac-light};
+  --p-skeleton-animation-background: rgba(255, 255, 255, 0.6);
+}
+
 #app {
   max-width: 1280px;
   margin: 0 auto;

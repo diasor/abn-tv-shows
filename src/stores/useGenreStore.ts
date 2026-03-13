@@ -1,8 +1,16 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { Genre } from '@/schemas/genres';
+import { usePaginationStore } from './usePaginationStore';
 
 export const useGenreStore = defineStore('genre', () => {
+  /**
+   * Pagination store is needed to trigger the fetch shows API endpoint
+   * whenever the selected genre changes.
+   */
+  const pagination = usePaginationStore();
+  const { resetPagination } = pagination;
+
   /**
    * Stores the currently selected genre. Defaults to 'All' to show all genres when the app loads.
    */
@@ -22,6 +30,7 @@ export const useGenreStore = defineStore('genre', () => {
    */
   const setSelectedGenre = (genre: Genre) => {
     selectedGenre.value = genre;
+    resetPagination(pagination.totalRecords);
   };
 
   return {

@@ -16,7 +16,13 @@ const props = defineProps<IShowImageProps>();
       <img :src="props.image?.original" :alt="props.alt" class="tv-show-image-full" />
     </template>
     <template #preview="slotProps">
-      <img :src="props.image?.original" :alt="props.alt" @click.prevent="slotProps" />
+      <img
+        :src="props.image?.original"
+        :alt="props.alt"
+        :style="slotProps.style"
+        @click="slotProps.onClick"
+        class="tv-show-image-overlay"
+      />
     </template>
   </Image>
   <img v-else :src="props.image?.medium" :alt="props.alt" class="tv-show-image" />
@@ -51,13 +57,12 @@ const props = defineProps<IShowImageProps>();
   object-fit: cover;
 }
 
-.tv-show-image-preview :deep(.p-image),
-.tv-show-image-preview :deep(.p-image-preview-container) {
-  flex: 1;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-height: 0;
+.tv-show-image-overlay {
+  max-width: 100vw;
+  max-height: 100vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.5rem;
 }
 </style>
