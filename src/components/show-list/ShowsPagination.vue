@@ -25,6 +25,43 @@ const onPageChange = (event: PageState) => {
 
 .pagination {
   display: flex;
+
+  @media (max-width: 500px) {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    overflow: hidden;
+
+    // Allow the inner paginator row to wrap onto multiple lines
+    :deep(.p-paginator-content) {
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+    }
+
+    // Allow the page-numbers group to wrap and shrink
+    :deep(.p-paginator-pages) {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    // Hide first/last page buttons to save space
+    :deep(.p-paginator-first),
+    :deep(.p-paginator-last) {
+      display: none;
+    }
+
+    // Shrink page number and prev/next buttons
+    :deep(.p-paginator-page),
+    :deep(.p-paginator-prev),
+    :deep(.p-paginator-next) {
+      min-width: 1.75rem;
+      width: 1.75rem;
+      height: 1.75rem;
+      padding: 0;
+      font-size: 0.75rem;
+    }
+  }
   // selected page button
   :deep(.p-paginator-page-selected) {
     background: $color-lilac-light;

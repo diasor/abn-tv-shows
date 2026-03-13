@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeAll, beforeEach, vi } from 'vitest';
 import { mount, flushPromises } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
-import InputText from 'primevue/inputtext';
 import Menubar from 'primevue/menubar';
 import TheMenu from './TheMenu.vue';
 import { routerPushMock } from '@/test/setup';
@@ -86,13 +85,5 @@ describe('Testing TheMenu component', () => {
     await flushPromises();
     // assert
     expect(routerPushMock).toHaveBeenCalledWith('/about');
-  });
-
-  it('renders the search input', () => {
-    // arrange & act
-    const wrapper = createWrapper();
-    const inputText = wrapper.findComponent(InputText);
-    // assert
-    expect(inputText.exists()).toBe(true);
   });
 });

@@ -70,11 +70,24 @@ const formattedTitle = computed((): string =>
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: stretch;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
   }
 }
 
 .genre-section {
   padding: 0 2rem 1.5rem;
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+  }
+  @media (max-width: 500px) {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+  }
 }
 
 .tv-shows-list {
@@ -107,7 +120,8 @@ const formattedTitle = computed((): string =>
 @media (max-width: 899px) {
   .tv-shows-list {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    // gap: 1rem;
+    margin: 0;
   }
 }
 </style>

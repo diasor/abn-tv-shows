@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Card from 'primevue/card';
 import AboutItem from '@/components/about/AboutItem.vue';
+import AboutImages from '@/components/about/AboutImages.vue';
 import DocumentationIcon from '@/components/about/icons/IconDocumentation.vue';
 import ToolingIcon from '@/components/about/icons/IconTooling.vue';
 import EcosystemIcon from '@/components/about/icons/IconEcosystem.vue';
@@ -107,7 +108,17 @@ const openReadmeInEditor = () => fetch('/__open-in-editor?file=README.md');
         <template #icon>
           <SupportIcon />
         </template>
-        <template #heading>Architecture</template>
+        <template #heading>Responsiveness</template>
+        The application is fully responsive. It can fit the smallest devices and adjusts correctly,
+        as needed.
+        <AboutImages />
+      </AboutItem>
+
+      <AboutItem>
+        <template #icon>
+          <SupportIcon />
+        </template>
+        <template #heading>Architechture</template>
       </AboutItem>
     </template>
   </Card>

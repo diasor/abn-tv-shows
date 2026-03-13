@@ -33,10 +33,18 @@ html {
 .app-header {
   width: calc(100% - 8rem);
   margin: 2rem 4rem;
+  @media (max-width: 899px) {
+    margin: 0.3rem;
+    width: 100%;
+  }
 }
 
 .app-main-container {
   width: calc(100% - 8rem);
   margin: auto 4rem;
+  @media (max-width: 899px) {
+    margin: 0.3rem;
+    width: 100%;
+  }
 }
 </style>

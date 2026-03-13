@@ -133,4 +133,23 @@ const formattedPremiered = computed(() => {
     gap: 0.25rem;
   }
 }
+
+@media (max-width: 500px) {
+  .tv-show-tile {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .tv-show-content {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .tv-show-information-row {
+    flex-wrap: wrap;
+    word-break: break-word;
+  }
+}
 </style>
