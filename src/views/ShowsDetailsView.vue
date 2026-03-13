@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from 'vue';
+import { storeToRefs } from 'pinia';
 import Card from 'primevue/card';
 import ShowTabs from '@/components/show-details/ShowTabs.vue';
 import ShowDetailsMain from '@/components/show-details/ShowDetailsMain.vue';
 import { useShowDetailsStore } from '@/stores/useShowDetailsStore';
-import { storeToRefs } from 'pinia';
 
 interface IShowDetailsProps {
   id: string;

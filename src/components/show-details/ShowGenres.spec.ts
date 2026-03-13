@@ -31,7 +31,7 @@ describe('Testing ShowGenres component', () => {
     const wrapper = createWrapper();
     const badgeComponents = wrapper.findAllComponents(Badge);
     // assert
-    expect(badgeComponents).toHaveLength(defaultProps.genres.length);
+    expect(badgeComponents).toHaveLength(2);
   });
 
   it('renders the correct genre text in each Badge component', () => {
@@ -49,7 +49,7 @@ describe('Testing ShowGenres component', () => {
     const props = {
       genres: ['Drama', 'Action', 'Comedy', 'Thriller', 'Sci-Fi'],
     };
-    const expectedGenres = props.genres.slice(0, 2); // Show max 3 genres
+    const expectedGenres = props.genres.slice(0, 2); // Show max 2 genres
     const wrapper = createWrapper(props);
     const badgeComponents = wrapper.findAllComponents(Badge);
     // assert

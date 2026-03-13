@@ -6,7 +6,7 @@ import ShowDetailsSkeleton from '@/components/show-details/ShowDetailsSkeleton.v
 import ShowImage from '@/components/show-details/ShowImage.vue';
 import ShowSummary from '@/components/show-details/ShowSummary.vue';
 import ShowInformation from '@/components/show-details/ShowInformation.vue';
-import { tvShowComplete } from '@/mocks/testing-data';
+import { tvShowComplete } from '@/mocks/shows';
 
 const defaultProps = {
   tvShow: tvShowComplete,

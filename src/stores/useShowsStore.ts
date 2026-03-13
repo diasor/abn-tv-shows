@@ -1,34 +1,56 @@
 import { ref, computed } from 'vue';
-import { defineStore } from 'pinia';
+import { defineStore, storeToRefs } from 'pinia';
 import type { TVShow } from '@/schemas/shows';
+import { Genre } from '@/schemas/genres';
 import { fetchClient } from '@/shared/api/fetchClient';
 import { API_SHOWS_BASE, DEFAULT_SHOWS_LIMIT } from '@/shared/api/constants';
+import { useGenreStore } from '@/stores/useGenreStore';
 
 export const useShowsStore = defineStore('shows', () => {
-  const selectedGenre = ref('All');
+  /**
+   * Genre store is needed to trigger the fetch shows API endpoint
+   * and to filter shows by the selected genre.
+   */
+  const genreStore = useGenreStore();
+  const { selectedGenre, showAllGenres } = storeToRefs(genreStore);
+
+  /**
+   * Indicates whether the tv shows are currently being loaded.
+   * It controls the skeleton for the main dashboard.
+   */
   const isLoading = ref(false);
+
+  /**
+   * Stores all shows returned by the fetch API.
+   */
   const shows = ref<TVShow[]>([]);
+
+  /**
+   * Stores all visible shows.
+   * If showAllGenres is true, it returns all shows.
+   * Otherwise, it filters shows by the selected genre.
+   */
   const visibleShows = computed(() => {
-    if (selectedGenre.value === 'All') {
+    if (showAllGenres.value) {
       return shows.value;
     }
-    return shows.value.filter((show) => show.genres.includes(selectedGenre.value));
+    return shows.value.filter((show) => show.genres.includes(selectedGenre.value as Genre));
   });
 
   /**
    * Groups visibleShows by genre and sorts each group by rating (descending).
    * Genres are sorted alphabetically.
    */
-  const showsByGenre = computed((): { genre: string; shows: TVShow[] }[] => {
-    const isAllGenres = selectedGenre.value === 'All';
-    const genreMap = new Map<string, TVShow[]>();
+  const showsByGenre = computed((): { genre: Genre; shows: TVShow[] }[] => {
+    const isAllGenres = showAllGenres.value;
+    const genreMap = new Map<Genre, TVShow[]>();
 
     for (const show of visibleShows.value) {
       const genres = isAllGenres
         ? show.genres?.length
           ? show.genres
-          : ['Unknown']
-        : [selectedGenre.value];
+          : [Genre.UNKNOWN]
+        : [selectedGenre.value as Genre];
       for (const genre of genres) {
         if (!genreMap.has(genre)) genreMap.set(genre, []);
         genreMap.get(genre)!.push(show);
@@ -62,26 +84,11 @@ export const useShowsStore = defineStore('shows', () => {
     }
   };
 
-  const getShowsByGenre = async (page: number = 1): Promise<void> => {
-    isLoading.value = true;
-    try {
-      const response = await fetchClient(
-        `${API_SHOWS_BASE}/shows?page=${selectedGenre.value}&page=${page}&limit=${DEFAULT_SHOWS_LIMIT}`,
-      );
-      shows.value = response as TVShow[];
-    } catch (error) {
-      shows.value = [];
-    } finally {
-      isLoading.value = false;
-    }
-  };
-
   return {
     visibleShows,
     showsByGenre,
     selectedGenre,
     fetchShows,
-    getShowsByGenre,
     isLoading,
   };
 });

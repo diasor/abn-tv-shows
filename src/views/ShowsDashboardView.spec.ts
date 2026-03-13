@@ -1,19 +1,21 @@
 import { vi, describe, it, expect, beforeEach } from 'vitest';
+import { ref } from 'vue';
 import { mount } from '@vue/test-utils';
 import { setActivePinia, createPinia } from 'pinia';
 import PrimeVue from 'primevue/config';
 import ShowsDashboardView from './ShowsDashboardView.vue';
 import ShowsTile from '@/components/show-list/ShowsTile.vue';
 import { useShowsStore } from '@/stores/useShowsStore';
-import { tvShow1, tvShow2 } from '@/mocks/testing-data';
+import { tvShow1, tvShow2 } from '@/mocks/shows';
 
 vi.mock('@/stores/useShowsStore', () => ({
   useShowsStore: vi.fn(() => ({
     // Comedy (tvShow2) before Drama (tvShow1) — alphabetical genre order
-    showsByGenre: [
+    showsByGenre: ref([
       { genre: 'Comedy', shows: [tvShow2] },
       { genre: 'Drama', shows: [tvShow1] },
-    ],
+    ]),
+    isLoading: ref(false),
     fetchShows: vi.fn(),
   })),
 }));
@@ -63,7 +65,8 @@ describe('Testing ShowsDashboardView', () => {
       // arrange
       const mockUseShowsStore = vi.mocked(useShowsStore);
       mockUseShowsStore.mockReturnValue({
-        showsByGenre: [],
+        showsByGenre: ref([]),
+        isLoading: ref(false),
         fetchShows: vi.fn(),
       } as unknown as ReturnType<typeof useShowsStore>);
       // act

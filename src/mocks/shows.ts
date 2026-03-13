@@ -1,13 +1,16 @@
-export const tvShowImage = {
+import type { TVShow, TVShowDetails, TVShowImage } from '@/schemas/shows';
+import { genres1, genres2 } from './genres';
+
+export const tvShowImage: TVShowImage = {
   medium: 'https://example.com/image.jpg',
   original: 'https://example.com/imageOriginal.jpg',
 };
 
-export const tvShow1 = {
+export const tvShow1: TVShow = {
   id: '1',
   name: 'Test Show 1',
   language: 'English',
-  genres: ['Drama'],
+  genres: genres1,
   premiered: '2020-01-01',
   rating: { average: 8.0 },
   image: tvShowImage,
@@ -15,21 +18,23 @@ export const tvShow1 = {
   type: '',
 };
 
-export const tvShow2 = {
+export const tvShow2: TVShow = {
   id: '2',
   name: 'Test Show 2',
   language: 'Dutch',
-  genres: ['Comedy'],
+  genres: genres2,
   premiered: '2016-12-01',
   rating: { average: 9.0 },
-  image: { medium: 'https://example.com/image.jpg' },
+  image: tvShowImage,
+  url: '',
+  type: '',
 };
 
-export const tvShowComplete = {
+export const tvShowComplete: TVShowDetails = {
   id: '1',
   name: 'Test Show',
   language: 'English',
-  genres: ['Drama', 'Action'],
+  genres: genres1,
   premiered: '2020-01-15',
   rating: { average: 8.5 },
   url: '',

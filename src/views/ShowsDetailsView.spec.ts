@@ -8,7 +8,7 @@ import ShowsDetailsView from './ShowsDetailsView.vue';
 import ShowTabs from '@/components/show-details/ShowTabs.vue';
 import ShowDetailsMain from '@/components/show-details/ShowDetailsMain.vue';
 import { useShowDetailsStore } from '@/stores/useShowDetailsStore';
-import { tvShow1 } from '@/mocks/testing-data';
+import { tvShow1 } from '@/mocks/shows';
 
 vi.mock('@/stores/useShowDetailsStore', () => ({
   useShowDetailsStore: vi.fn(() => ({

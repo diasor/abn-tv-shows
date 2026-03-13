@@ -12,7 +12,7 @@ interface IShowDetailsProps {
 }
 const props = defineProps<IShowDetailsProps>();
 
-const tvShowSkeleton = ref(true);
+const tvShowSkeleton = ref(false);
 watch(
   [() => props.isLoading, () => props.tvShow.id],
   ([isLoading, tvShowId]) => {
