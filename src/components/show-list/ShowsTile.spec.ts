@@ -6,7 +6,9 @@ import ShowsTile from './ShowsTile.vue';
 import ShowImage from '@/components/show-details/ShowImage.vue';
 import { NOT_AVAILABLE } from '@/shared/api/constants';
 import type { TVShow } from '@/schemas/shows';
-import { tvShowImage, tvShow1 } from '@/mocks/testing-data';
+import { tvShowImage, tvShow1 } from '@/mocks/shows';
+import { genres1, genres2 } from '@/mocks/genres';
+import { Genre } from '@/schemas/genres';
 
 describe('Testing ShowsTile component', () => {
   const createWrapper = (propsTvShow: TVShow) => {
@@ -140,17 +142,17 @@ describe('Testing ShowsTile component', () => {
   });
 
   describe('Genres rendering', () => {
-    it('displays a maximum of 3 genres', () => {
+    it('displays a maximum of 2 genres', () => {
       // arrange & act
       const wrapper = createWrapper({
         ...tvShow1,
-        genres: ['Drama', 'Action', 'Comedy', 'Thriller'],
+        genres: genres1,
       });
       // assert
-      expect(wrapper.text()).toContain('Drama');
-      expect(wrapper.text()).toContain('Action');
-      expect(wrapper.text()).toContain('Comedy');
-      expect(wrapper.text()).not.toContain('Thriller');
+      expect(wrapper.text()).toContain(Genre.DRAMA);
+      expect(wrapper.text()).toContain(Genre.ACTION);
+      expect(wrapper.text()).not.toContain(Genre.COMEDY);
+      expect(wrapper.text()).not.toContain(Genre.THRILLER);
     });
 
     it('does not display the genres section when no genres are provided', () => {

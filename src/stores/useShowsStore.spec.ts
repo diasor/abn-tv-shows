@@ -2,7 +2,9 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { setActivePinia, createPinia } from 'pinia';
 import { useShowsStore } from '@/stores/useShowsStore';
 import { fetchClient } from '@/shared/api/fetchClient';
-import { tvShow1, tvShow2 } from '@/mocks/testing-data';
+import { tvShow1, tvShow2 } from '@/mocks/shows';
+import { Genre } from '@/schemas/genres';
+import { useGenreStore } from './useGenreStore';
 
 vi.mock('@/shared/api/fetchClient', () => ({
   fetchClient: vi.fn(),
@@ -21,7 +23,7 @@ beforeEach(() => {
   fetchClientMock = vi.mocked(fetchClient);
 });
 
-describe('Testing useShowsStore', () => {
+describe('Testing useShowsStore store', () => {
   describe('Testing initial state', () => {
     it('initialises the state properties correctly', () => {
       // arrange & act
@@ -109,7 +111,7 @@ describe('Testing useShowsStore', () => {
       fetchClientMock.mockResolvedValueOnce([tvShow1, tvShow2]);
       await store.fetchShows();
       // act
-      store.selectedGenre = 'Drama';
+      store.selectedGenre = Genre.DRAMA;
       // assert
       expect(store.visibleShows).toEqual([tvShow1]);
     });
@@ -126,27 +128,63 @@ describe('Testing useShowsStore', () => {
     });
   });
 
-  describe('Testing getShowsByGenre method', () => {
-    it('calls fetchClient with the correct URL', async () => {
+  describe('Testing showsByGenre computed', () => {
+    it('groups shows by genre and sorts them by rating', async () => {
       // arrange
       const store = useShowsStore();
-      store.selectedGenre = 'Drama';
-      fetchClientMock.mockResolvedValueOnce([]);
-      const expectedUrl = 'https://api.test.com/shows?page=Drama&page=1&limit=10';
+      const showA = { ...tvShow1, genres: [Genre.DRAMA], rating: { average: 8 } };
+      const showB = { ...tvShow2, genres: [Genre.COMEDY], rating: { average: 9 } };
+      const showC = { ...tvShow1, id: 3, genres: [Genre.DRAMA], rating: { average: 7 } };
+      fetchClientMock.mockResolvedValueOnce([showA, showB, showC]);
       // act
-      await store.getShowsByGenre(1);
+      await store.fetchShows();
       // assert
-      expect(fetchClientMock).toHaveBeenCalledWith(expectedUrl);
+      expect(store.showsByGenre).toEqual([
+        { genre: Genre.COMEDY, shows: [showB] },
+        { genre: Genre.DRAMA, shows: [showA, showC] },
+      ]);
     });
 
-    it('sets visibleShows after fetching by genre', async () => {
+    it('returns shows filtered by the selected genre', async () => {
+      // arrange
+      const genreStore = useGenreStore();
+      genreStore.selectedGenre = Genre.THRILLER;
+      const store = useShowsStore();
+      const showA = { ...tvShow1, genres: [Genre.DRAMA], rating: { average: 8 } };
+      const showB = { ...tvShow2, genres: [Genre.COMEDY], rating: { average: 9 } };
+      const showC = {
+        ...tvShow1,
+        id: 3,
+        genres: [Genre.DRAMA, Genre.THRILLER],
+        rating: { average: 7 },
+      };
+      fetchClientMock.mockResolvedValueOnce([showA, showB, showC]);
+      // act
+      await store.fetchShows();
+      // assert
+      expect(store.showsByGenre).toEqual([{ genre: Genre.THRILLER, shows: [showC] }]);
+    });
+
+    it('returns shows with UNKNOWN genre, if the original genre list is empty', async () => {
       // arrange
       const store = useShowsStore();
-      fetchClientMock.mockResolvedValueOnce([tvShow1]);
+      const showA = { ...tvShow1, genres: [], rating: { average: 8 } };
+      const showB = { ...tvShow2, genres: [Genre.COMEDY], rating: { average: 9 } };
+      const showC = {
+        ...tvShow1,
+        id: 3,
+        genres: [Genre.DRAMA],
+        rating: { average: 7 },
+      };
+      fetchClientMock.mockResolvedValueOnce([showA, showB, showC]);
       // act
-      await store.getShowsByGenre();
+      await store.fetchShows();
       // assert
-      expect(store.visibleShows).toEqual([tvShow1]);
+      expect(store.showsByGenre).toEqual([
+        { genre: Genre.COMEDY, shows: [showB] },
+        { genre: Genre.DRAMA, shows: [showC] },
+        { genre: Genre.UNKNOWN, shows: [showA] },
+      ]);
     });
   });
 });

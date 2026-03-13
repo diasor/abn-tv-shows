@@ -1,3 +1,5 @@
+import { Genre } from '@/schemas/genres';
+
 /**
  * TV Show image data structure.
  */
@@ -26,7 +28,7 @@ export type TVShowSchedule = {
 export type TVShow = {
   id: string;
   name: string;
-  genres: string[];
+  genres: Genre[];
   rating: TVShowRating;
   url: string;
   type: string;

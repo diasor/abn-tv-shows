@@ -3,7 +3,7 @@ import { mount, flushPromises } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Image from 'primevue/image';
 import ShowImage from './ShowImage.vue';
-import { tvShowImage } from '@/mocks/testing-data';
+import { tvShowImage } from '@/mocks/shows';
 
 const defaultProps = {
   image: tvShowImage,

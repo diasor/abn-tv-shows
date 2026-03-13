@@ -1,21 +1,34 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref, watch } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import Card from 'primevue/card';
-import Divider from 'primevue/divider';
 import ShowsTile from '@/components/show-list/ShowsTile.vue';
+import ShowsTileSkeleton from '@/components/show-list/ShowsTileSkeleton.vue';
+import ShowsGenreDivider from '@/components/show-list/ShowsGenreDivider.vue';
+import GenreSelector from '@/components/show-list/GenreSelector.vue';
 import { useShowsStore } from '@/stores/useShowsStore';
 
 const showsStore = useShowsStore();
+const { showsByGenre, isLoading } = storeToRefs(showsStore);
 const router = useRouter();
 
 const goToShowDetails = (id: string | number) => {
   router.push(`/show/${id}`);
 };
 
+const tvShowSkeleton = ref(false);
 onMounted(() => {
   showsStore.fetchShows();
 });
+
+watch(
+  isLoading,
+  (newIsLoading) => {
+    tvShowSkeleton.value = newIsLoading;
+  },
+  { immediate: true },
+);
 </script>
 
 <template>
@@ -24,13 +37,17 @@ onMounted(() => {
       <h1>TV Shows Dashboard</h1>
     </template>
     <template #content>
-      <div v-for="group in showsStore.showsByGenre" :key="group.genre" class="genre-section">
-        <Divider type="dashed" align="left" class="tv-show-divider">
-          <h2 class="genre-heading">{{ group.genre }}</h2>
-        </Divider>
-        <div class="shows-list">
-          <div v-for="show in group.shows" :key="show.id" class="show-item">
-            <ShowsTile :tvShow="show" @click.prevent="goToShowDetails(show.id)" />
+      <div v-if="tvShowSkeleton">
+        <ShowsTileSkeleton />
+      </div>
+      <div v-else>
+        <GenreSelector />
+        <div v-for="group in showsByGenre" :key="group.genre" class="genre-section">
+          <ShowsGenreDivider :genre="group.genre" />
+          <div class="shows-list">
+            <div v-for="show in group.shows" :key="show.id" class="show-item">
+              <ShowsTile :tvShow="show" @click.prevent="goToShowDetails(show.id)" />
+            </div>
           </div>
         </div>
       </div>
@@ -59,12 +76,6 @@ onMounted(() => {
   :deep(.p-divider-content) {
     background-color: transparent;
   }
-}
-
-.genre-heading {
-  //   padding: 1rem 0 0;
-  text-align: left;
-  background-color: #fffff;
 }
 
 .shows-list {

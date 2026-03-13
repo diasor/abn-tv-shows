@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { setActivePinia, createPinia } from 'pinia';
 import { useShowDetailsStore } from '@/stores/useShowDetailsStore';
 import { fetchClient } from '@/shared/api/fetchClient';
-import { tvShow1, tvShow2 } from '@/mocks/testing-data';
+import { tvShow1, tvShow2 } from '@/mocks/shows';
 
 vi.mock('@/shared/api/fetchClient', () => ({
   fetchClient: vi.fn(),

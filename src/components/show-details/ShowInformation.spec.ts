@@ -7,7 +7,7 @@ import ShowOfficialSite from '@/components/show-details/ShowOfficialSite.vue';
 import ShowRating from '@/components/show-details/ShowRating.vue';
 import ShowGenres from '@/components/show-details/ShowGenres.vue';
 import { NOT_AVAILABLE } from '@/shared/api/constants';
-import { tvShowComplete } from '@/mocks/testing-data';
+import { tvShowComplete } from '@/mocks/shows';
 
 const defaultProps = {
   tvShow: tvShowComplete,
