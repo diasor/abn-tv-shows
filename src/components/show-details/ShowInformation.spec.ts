@@ -48,7 +48,6 @@ describe('Testing ShowInformation component', () => {
 
     it('renders "N/A" for missing Language information', () => {
       // arrange & act
-      // @ts-expect-error - test intentionally removes required field
       delete tvShowWithMissingData.language;
       const propsWithMissingData = {
         tvShow: tvShowWithMissingData,
@@ -82,7 +81,6 @@ describe('Testing ShowInformation component', () => {
       const propsWithoutPremiered = {
         tvShow: tvShowWithoutPremiered,
       };
-      // @ts-expect-error - test intentionally removes required field
       const wrapper = createWrapper(propsWithoutPremiered);
       const allShowDataComponent = wrapper.findAllComponents(BaseShowData);
       // assert

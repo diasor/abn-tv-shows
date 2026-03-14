@@ -20,7 +20,7 @@ const props = defineProps<IShowImageProps>();
         :src="props.image?.original"
         :alt="props.alt"
         :style="slotProps.style"
-        @click="slotProps.onClick"
+        @click="slotProps.previewCallback"
         class="tv-show-image-overlay"
       />
     </template>

@@ -12,7 +12,7 @@ export type TVShowImage = {
  * TV Show rating data structure.
  */
 export type TVShowRating = {
-  average?: number;
+  average?: number | null;
 };
 
 /**
@@ -28,12 +28,12 @@ export type TVShowSchedule = {
 export type TVShow = {
   id: string;
   name: string;
-  genres: Genre[];
+  genres?: Genre[];
   rating: TVShowRating;
   url: string;
   type: string;
-  language: string;
-  premiered: string;
+  language?: string;
+  premiered?: string | null;
   image: TVShowImage;
 };
 
