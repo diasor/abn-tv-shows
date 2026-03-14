@@ -4,29 +4,39 @@ import Galleria from 'primevue/galleria';
 
 const images = ref([
   {
-    itemImageSrc: '/dashboard(laptop mac air pro).png',
-    thumbnailImageSrc: '/dashboard(laptop mac air pro).png',
+    itemImageSrc: '/responsiveness/dashboard(laptop mac air pro).png',
+    thumbnailImageSrc: '/responsiveness/dashboard(laptop mac air pro).png',
     alt: 'Dashboard on laptop',
   },
   {
-    itemImageSrc: '/details (laptop air pro)-front.png',
-    thumbnailImageSrc: '/details (laptop air pro)-front.png',
+    itemImageSrc: '/responsiveness/details (laptop air pro)-front.png',
+    thumbnailImageSrc: '/responsiveness/details (laptop air pro)-front.png',
     alt: 'Details page on laptop',
   },
   {
-    itemImageSrc: '/dashboard(iPad Pro)-portrait.png',
-    thumbnailImageSrc: '/dashboard(iPad Pro)-portrait.png',
+    itemImageSrc: '/responsiveness/dashboard(iPad Pro)-portrait.png',
+    thumbnailImageSrc: '/responsiveness/dashboard(iPad Pro)-portrait.png',
     alt: 'Dashboard on iPad Pro',
   },
   {
-    itemImageSrc: '/dashboard(iPhone 14 Pro Max) (1)-portrait.png',
-    thumbnailImageSrc: '/dashboard(iPhone 14 Pro Max) (1)-portrait.png',
+    itemImageSrc: '/responsiveness/dashboard(iPhone 14 Pro Max) (1)-portrait.png',
+    thumbnailImageSrc: '/responsiveness/dashboard(iPhone 14 Pro Max) (1)-portrait.png',
     alt: 'Dashboard on iPhone 14 Pro Max',
   },
   {
-    itemImageSrc: '/details-page(iPhone 14 Pro Max)-portrait.png',
-    thumbnailImageSrc: '/details-page(iPhone 14 Pro Max)-portrait.png',
+    itemImageSrc: '/responsiveness/details-page(iPhone 14 Pro Max)-portrait.png',
+    thumbnailImageSrc: '/responsiveness/details-page(iPhone 14 Pro Max)-portrait.png',
     alt: 'Details page on iPhone 14 Pro Max',
+  },
+  {
+    itemImageSrc: '/responsiveness/desktop-skeleton-dashboard-front.png',
+    thumbnailImageSrc: '/responsiveness/desktop-skeleton-dashboard-front.png',
+    alt: 'Desktop skeleton dashboard front',
+  },
+  {
+    itemImageSrc: '/responsiveness/desktop-details-skeleton-front.png',
+    thumbnailImageSrc: '/responsiveness/desktop-details-skeleton-front.png',
+    alt: 'Desktop skeleton details front',
   },
 ]);
 
@@ -59,6 +69,15 @@ const responsiveOptions = ref([
 </template>
 
 <style scoped lang="scss">
+@use '@/assets/theme' as *;
+
+.card {
+  border: 1px solid $color-lilac-darker;
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 640px;
+}
+
 .thumbnail-img {
   width: 60px;
   height: 60px;
