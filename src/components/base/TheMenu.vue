@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Menubar from 'primevue/menubar';
-import InputText from 'primevue/inputtext';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -38,11 +37,6 @@ const items = ref([
           <span :class="item.icon" />
           <span class="ml-2">{{ item.label }}</span>
         </a>
-      </template>
-      <template #end>
-        <div class="flex items-center gap-2">
-          <InputText placeholder="Search" type="text" class="w-32 sm:w-auto" />
-        </div>
       </template>
     </Menubar>
   </div>

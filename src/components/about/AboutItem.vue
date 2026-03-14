@@ -1,13 +1,14 @@
 <template>
-  <div class="item">
+  <div class="about-item">
     <i>
       <slot name="icon"></slot>
     </i>
-    <div class="details">
-      <h3>
+    <div class="about-details">
+      <h2>
         <slot name="heading"></slot>
-      </h3>
+      </h2>
       <slot></slot>
+      <div class="about-divider"></div>
     </div>
   </div>
 </template>
@@ -15,19 +16,25 @@
 <style scoped lang="scss">
 @use '@/assets/theme' as *;
 
-.item {
+.about-item {
   margin-top: 2rem;
   display: flex;
   position: relative;
 }
 
-.details {
+.about-details {
   flex: 1;
   margin-left: 1rem;
   font-size: 1.2rem;
   font-weight: 500;
-  //   font-family: $font-playful;
   color: $color-lilac-dark;
+
+  > h2 {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: $color-lilac-darker;
+    text-align: left;
+  }
 }
 
 i {
@@ -40,13 +47,13 @@ i {
 }
 
 @media (min-width: 1024px) {
-  .item {
+  .about-item {
     margin-top: 0;
     padding: 0.4rem 0 1rem calc(var(--section-gap) / 2);
   }
 
   i {
-    top: calc(50% - 25px);
+    top: 0.4rem;
     left: -26px;
     position: absolute;
     border: 1px solid $color-lilac-darker;
@@ -56,30 +63,36 @@ i {
     height: 50px;
   }
 
-  .item:before {
+  .about-item:before {
     content: ' ';
     border-left: 1px solid $color-lilac-dark;
     position: absolute;
     left: 0;
-    bottom: calc(50% + 25px);
-    height: calc(50% - 25px);
+    top: 0;
+    height: 0.4rem;
   }
 
-  .item:after {
+  .about-item:after {
     content: ' ';
     border-left: 1px solid $color-lilac-dark;
     position: absolute;
     left: 0;
-    top: calc(50% + 25px);
-    height: calc(50% - 25px);
+    top: calc(0.4rem + 50px);
+    bottom: 0;
   }
 
-  .item:first-of-type:before {
+  .about-item:first-of-type:before {
     display: none;
   }
 
-  .item:last-of-type:after {
+  .about-item:last-of-type:after {
     display: none;
   }
+}
+
+.about-divider {
+  display: flex;
+  margin-top: 1.5rem;
+  border: 1px solid $color-lilac-light;
 }
 </style>

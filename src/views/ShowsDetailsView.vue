@@ -24,7 +24,7 @@ onMounted(async () => {
  * Otherwise, returns the show's name followed by "details".
  */
 const formattedTitle = computed((): string => {
-  if (!selectedShow.value || !selectedShow.value.name) return 'TV Show Details';
+  if (!selectedShow.value || !selectedShow.value.name) return 'TV show details loading...';
   return `${selectedShow.value.name}'s details`;
 });
 

@@ -3,13 +3,32 @@ import { defineStore } from 'pinia';
 import type { TVShowDetails } from '@/schemas/shows';
 import { fetchClient } from '@/shared/api/fetchClient';
 import { API_SHOWS_BASE } from '@/shared/api/constants';
+import { sleep } from '@/shared/utilities';
 
 export const useShowDetailsStore = defineStore('showDetails', () => {
+  /**
+   * Indicates whether the current tv show is currently being loaded.
+   * It controls the skeleton for the main dashboard.
+   */
   const isLoading = ref(false);
+
+  /**
+   * Stores the details of the current TV show.
+   * It is updated when fetching the details of a specific show.
+   */
   const showDetails = ref<TVShowDetails>({} as TVShowDetails);
+
+  /**
+   * Returns the current selected TV show.
+   */
   const selectedShow = computed(() => showDetails.value);
 
-  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+  /**
+   * Resets the selected tv show.
+   */
+  const resetShowDetails = () => {
+    showDetails.value = {} as TVShowDetails;
+  };
 
   /**
    * Fetches the details of a TV show by its ID and
@@ -20,7 +39,7 @@ export const useShowDetailsStore = defineStore('showDetails', () => {
     isLoading.value = true;
     try {
       const response = await fetchClient(`${API_SHOWS_BASE}/shows/${id}`);
-      await sleep(4000); // this is only to show the skeleton
+      await sleep(3000); // this is only to show the skeleton
       showDetails.value = response as TVShowDetails;
     } catch (error) {
       showDetails.value = {} as TVShowDetails;
@@ -32,6 +51,7 @@ export const useShowDetailsStore = defineStore('showDetails', () => {
   return {
     selectedShow,
     fetchShowDetails,
+    resetShowDetails,
     isLoading,
   };
 });

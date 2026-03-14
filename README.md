@@ -32,13 +32,15 @@ src/
 ├── components/
 │   ├── base/         # Shared, reusable presentational components (BaseShowData, TheMenu)
 │   ├── show-details/ # Components for a single show detail page
-│   └── show-list/    # Components for the show catalogue (ShowsTile, etc.)
+│   └── show-list/    # Components for the show catalogue (ShowsTile, GenreSelector, ShowsPagination, etc.)
 ├── router/           # Vue Router configuration (3 routes: dashboard, show-details, about)
 ├── schemas/          # TypeScript types / Zod schemas for TVShow & TVShowDetails
 ├── shared/
-│   └── api/          # fetchClient utility + API constants (base URL, limits, N/A fallback)
+│   └── api/          # fetchClient utility + API constants (base URL, N/A fallback)
 ├── stores/
-│   ├── useShowsStore.ts        # Catalogue state: list, genre filter, pagination
+│   ├── useShowsStore.ts        # Catalogue state: all shows, genre filtering, paged/grouped views
+│   ├── useGenreStore.ts        # Selected genre state and helpers
+│   ├── usePaginationStore.ts   # Page, rows per page, total records
 │   └── useShowDetailsStore.ts  # Single-show state: selected show, loading flag
 ├── test/             # Vitest global setup (mocks, stubs, directives)
 └── views/
@@ -49,6 +51,8 @@ src/
 
 **Data flow:** Views consume Pinia stores → stores call `fetchClient` → `fetchClient` wraps the native `fetch` API against the TVMaze REST API.
 
+**Pagination strategy:** All shows are fetched in a single request on startup and stored in `allShows`. Client-side computed properties handle genre filtering (`filteredShows`) and page slicing (`pagedShows`), so navigating between pages and switching genres never triggers an additional network request.
+
 ---
 
 ## Main Flows
@@ -56,15 +60,29 @@ src/
 ### 1. Browse the shows catalogue
 
 1. User navigates to `/` → `ShowsDashboardView` mounts.
-2. `onMounted` triggers `useShowsStore.fetchShows()`, which calls `GET /shows?page=<n>&limit=20` on the TVMaze API.
-3. The store writes the result into `shows` and exposes `visibleShows` (computed, filtered by `selectedGenre`).
-4. `ShowsTile` components render for each show in `visibleShows`.
+2. `useShowsStore` initialises with a `watch({ immediate: true })` on the pagination state, which triggers `fetchShows()` on startup.
+3. `fetchShows()` calls `GET /shows` on the TVMaze API and stores the full response in `allShows`.
+4. The computed chain derives the visible data:
+   - `filteredShows` — `allShows` filtered by the selected genre (or the full list when _All_ is selected).
+   - `pagedShows` — a slice of `filteredShows` for the current page and page size.
+   - `showsByGenre` — `pagedShows` grouped and sorted by genre, consumed by the dashboard template.
+5. `ShowsTile` components render for each show in the current page's genre groups.
 
 ### 2. Filter shows by genre
 
-1. User selects a genre from the menu via `TheMenu`.
-2. `selectedGenre` in `useShowsStore` is updated.
-3. `visibleShows` recomputes automatically — no additional network request is made.
+1. User opens the genre menu via the `GenreSelector` button and picks a genre.
+2. `setSelectedGenre` in `useGenreStore` updates `selectedGenre`.
+3. A `watch` in `useShowsStore` detects the genre change and calls `resetPagination()` (page resets to 0, total record count is updated to match the newly filtered result set).
+4. `filteredShows` and all downstream computeds (`pagedShows`, `showsByGenre`) recompute automatically — no additional network request is made.
+5. The active genre is shown as a dismissible chip inside `GenreSelector`; clicking the × icon resets the filter back to _All shows_.
+
+### 3. Navigate between pages
+
+1. User clicks a page number, next, or previous in the `ShowsPagination` (PrimeVue `Paginator`) component.
+2. The `@page` event fires and calls `usePaginationStore.setPage(newPage)`.
+3. The `watch` in `useShowsStore` detects the page change and recomputes `pagedShows` from the already-loaded `filteredShows` slice — no network request is made.
+4. `showsByGenre` updates and the dashboard re-renders the new page of shows.
+5. When a genre filter is applied or cleared, pagination automatically resets to page 0 so the user always starts from the first page of the new result set.
 
 ### 3. View show details
 

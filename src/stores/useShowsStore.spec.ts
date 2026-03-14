@@ -29,8 +29,8 @@ describe('Testing useShowsStore store', () => {
       // arrange & act
       const store = useShowsStore();
       // assert
-      expect(store.visibleShows).toEqual([]);
-      expect(store.isLoading).toBe(false);
+      expect(store.filteredShows).toEqual([]);
+      expect(store.isLoading).toBe(true);
       expect(store.selectedGenre).toBe('All');
     });
   });
@@ -51,23 +51,23 @@ describe('Testing useShowsStore store', () => {
       expect(store.isLoading).toBe(false);
     });
 
-    it('sets visibleShows, when the api succeeds fetching', async () => {
+    it('sets filteredShows, when the api succeeds fetching', async () => {
       // arrange
       const store = useShowsStore();
       fetchClientMock.mockResolvedValueOnce([tvShow1, tvShow2]);
       // act
       await store.fetchShows();
       // assert
-      expect(store.visibleShows).toEqual([tvShow1, tvShow2]);
+      expect(store.filteredShows).toEqual([tvShow1, tvShow2]);
     });
 
     it('calls fetchClient with correct URL', async () => {
       // arrange
       const store = useShowsStore();
       fetchClientMock.mockResolvedValueOnce([]);
-      const expectedUrl = 'https://api.test.com/shows?&page=2&limit=10';
+      const expectedUrl = 'https://api.test.com/shows';
       // act
-      await store.fetchShows(2);
+      await store.fetchShows();
       // assert
       expect(fetchClientMock).toHaveBeenCalledWith(expectedUrl);
     });
@@ -93,7 +93,7 @@ describe('Testing useShowsStore store', () => {
     });
   });
 
-  describe('Testing visibleShows computed', () => {
+  describe('Testing filteredShows computed', () => {
     it('returns all shows when selectedGenre is All', async () => {
       // arrange
       const store = useShowsStore();
@@ -102,7 +102,7 @@ describe('Testing useShowsStore store', () => {
       await store.fetchShows();
       // assert
       expect(store.selectedGenre).toBe('All');
-      expect(store.visibleShows).toEqual([tvShow1, tvShow2]);
+      expect(store.filteredShows).toEqual([tvShow1, tvShow2]);
     });
 
     it('filters shows by selected genre', async () => {
@@ -113,7 +113,7 @@ describe('Testing useShowsStore store', () => {
       // act
       store.selectedGenre = Genre.DRAMA;
       // assert
-      expect(store.visibleShows).toEqual([tvShow1]);
+      expect(store.filteredShows).toEqual([tvShow1]);
     });
 
     it('sets an empty array, when the api fails', async () => {
@@ -124,7 +124,7 @@ describe('Testing useShowsStore store', () => {
       // act
       await store.fetchShows();
       // assert
-      expect(store.visibleShows).toEqual([]);
+      expect(store.filteredShows).toEqual([]);
     });
   });
 

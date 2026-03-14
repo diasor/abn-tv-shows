@@ -31,13 +31,14 @@ const allMenuGenreItems = computed(() =>
  */
 const genreStore = useGenreStore();
 const { selectedGenre, showAllGenres } = storeToRefs(genreStore);
+const { setSelectedGenre } = genreStore;
 const showGenreChip = ref(false);
 const resetGenre = () => {
-  genreStore.setSelectedGenre(Genre.ALL);
+  setSelectedGenre(Genre.ALL);
   showGenreChip.value = false;
 };
 const updateCurrentGenre = (id: Genre) => {
-  genreStore.setSelectedGenre(id);
+  setSelectedGenre(id);
 };
 
 /**
@@ -120,6 +121,7 @@ watch(selectedGenre, (newGenre, oldGenre) => {
 
 .genre-button:hover {
   border-radius: 0.5rem;
+  color: $color-lilac-medium !important;
   background: $background-gradient;
   box-shadow: $box-shadow-gradient;
 }
