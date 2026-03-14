@@ -50,7 +50,7 @@ export const useShowsStore = defineStore('shows', () => {
     if (showAllGenres.value) {
       return allShows.value;
     }
-    return allShows.value.filter((show) => show.genres.includes(selectedGenre.value as Genre));
+    return allShows.value.filter((show) => show.genres?.includes(selectedGenre.value as Genre));
   });
 
   /**
@@ -82,7 +82,7 @@ export const useShowsStore = defineStore('shows', () => {
         : [selectedGenre.value as Genre];
       for (const genre of genres) {
         if (!genreMap.has(genre)) genreMap.set(genre, []);
-        if (genre === Genre.UNKNOWN || show.genres.includes(genre as Genre)) {
+        if (genre === Genre.UNKNOWN || show.genres?.includes(genre as Genre)) {
           genreMap.get(genre)!.push(show);
         }
       }

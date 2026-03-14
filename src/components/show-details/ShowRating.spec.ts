@@ -5,7 +5,7 @@ import Badge from 'primevue/badge';
 import Rating from 'primevue/rating';
 import ShowRating from '@/components/show-details/ShowRating.vue';
 
-const defaultProps = {
+const defaultProps: { rating: { average: number | null | undefined } } = {
   rating: {
     average: 8.5,
   },
