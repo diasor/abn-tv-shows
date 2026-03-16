@@ -24,18 +24,18 @@ const items = ref([
   <div class="menu-container card flex justify-center align-items-center">
     <Menubar :model="items">
       <template #start>
-        <span class="pi pi-desktop" />
+        <span class="pi pi-desktop menu-icon" />
       </template>
       <template #item="{ item, props }">
         <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
           <a v-ripple :href="href" v-bind="props.action" @click="navigate">
             <span :class="item.icon" />
-            <span class="ml-2">{{ item.label }}</span>
+            <span>{{ item.label }}</span>
           </a>
         </router-link>
         <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
           <span :class="item.icon" />
-          <span class="ml-2">{{ item.label }}</span>
+          <span>{{ item.label }}</span>
         </a>
       </template>
     </Menubar>
@@ -46,21 +46,31 @@ const items = ref([
 @use '@/assets/theme' as *;
 
 .menu-container {
-  line-height: 1.5;
+  line-height: 2rem;
 
   .p-menubar {
     background: $background-gradient;
     box-shadow: $box-shadow-gradient;
     transition: $playful-transition;
   }
+
+  .menu-icon {
+    margin: auto 2rem;
+    font-size: 1.5rem;
+  }
 }
 
 a {
   font-weight: 500;
   font-family: $font-playful;
+  font-size: 1.5rem;
   color: $color-lilac-dark;
   text-shadow: $font-text-shadow-playful;
   text-decoration: none;
+  padding: 0.5rem 0.5rem !important;
+  > span {
+    font-size: 1.2rem;
+  }
 }
 
 a:hover {
@@ -68,4 +78,8 @@ a:hover {
   background: $background-gradient;
   box-shadow: $box-shadow-gradient;
 }
+
+// .p-menubar-item-link {
+//   padding: 0.5rem 0.3rem !important;
+// }
 </style>
