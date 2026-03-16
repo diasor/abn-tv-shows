@@ -2,7 +2,7 @@
 
 ## Project Description
 
-abn-tv-shows is a single-page application that lets users browse and explore TV shows sourced from the [TVMaze public API](https://api.tvmaze.com). Users can browse a paginated catalogue of shows, filter by genre, and open a dedicated details page for each show with information such as rating, schedule, genres, language, premiere date, and a summary.
+abn-tv-shows is a single-page application that lets users browse and explore TV shows sourced from the [TVMaze public API](https://api.tvmaze.com). Users can browse a paginated catalogue of shows, filter by genre, and open a dedicated details page for each show with information such as rating, schedule, genres, language, premiere date, and a summary. The details page also includes an Episodes tab with a responsive episodes list (episode number, season, name, rating, airdate, airtime, and image) plus client-side search/filter support.
 
 ---
 
@@ -28,21 +28,26 @@ abn-tv-shows is a single-page application that lets users browse and explore TV 
 
 ```
 src/
-├── assets/           # Global SCSS (base, theme, main)
+├── assets/           # Global SCSS and theme files
 ├── components/
+│   ├── about/        # About page building blocks
 │   ├── base/         # Shared, reusable presentational components (BaseShowData, TheMenu)
 │   ├── show-details/ # Components for a single show detail page
+│   ├── show-episodes/ # Components for the episodes table on the show detail page
 │   └── show-list/    # Components for the show catalogue (ShowsTile, GenreSelector, ShowsPagination, etc.)
 ├── router/           # Vue Router configuration (3 routes: dashboard, show-details, about)
-├── schemas/          # TypeScript types / Zod schemas for TVShow & TVShowDetails
+├── schemas/          # Data schemas: episodes, genres, images, rating, shows
 ├── shared/
-│   └── api/          # fetchClient utility + API constants (base URL, N/A fallback)
+│   ├── api/          # fetchClient utility + API constants (base URL, N/A fallback)
+│   ├── genres.ts     # Genre helpers
+│   └── utilities.ts  # Shared helper utilities
 ├── stores/
 │   ├── useShowsStore.ts        # Catalogue state: all shows, genre filtering, paged/grouped views
 │   ├── useGenreStore.ts        # Selected genre state and helpers
 │   ├── usePaginationStore.ts   # Page, rows per page, total records
-│   └── useShowDetailsStore.ts  # Single-show state: selected show, loading flag
-├── test/             # Vitest global setup (mocks, stubs, directives)
+│   ├── useShowDetailsStore.ts  # Single-show state: selected show, loading flag
+│   └── useShowEpisodesStore.ts # Episodes state: selected show episodes, loading flag
+├── test/             # Vitest setup and e2e suite support files
 └── views/
     ├── ShowsDashboardView.vue  # Catalogue page
     ├── ShowsDetailsView.vue    # Detail page
@@ -84,13 +89,21 @@ src/
 4. `showsByGenre` updates and the dashboard re-renders the new page of shows.
 5. When a genre filter is applied or cleared, pagination automatically resets to page 0 so the user always starts from the first page of the new result set.
 
-### 3. View show details
+### 4. View show details
 
 1. User clicks a `ShowsTile` → `router.push('/show/:id')`.
 2. `ShowsDetailsView` mounts with the route param `id` as a prop.
 3. `onMounted` triggers `useShowDetailsStore.fetchShowDetails(id)`, which calls `GET /shows/:id`.
 4. While loading, `ShowDetailsSkeleton` is displayed. When the response arrives, `ShowDetailsMain` renders the full information (image, rating, genres, information, summary, official site).
 5. `ShowTabs` provides tabbed navigation (Main / Episodes / Photos) within the detail page.
+
+### 5. View and filter episodes list
+
+1. On the show details page, user opens the _Episodes_ tab.
+2. `ShowEpisodeList` consumes `useShowEpisodesStore` and calls `fetchShowEpisodes(showId)`, which requests `GET /shows/:id/episodes`.
+3. While episodes are being fetched, the DataTable loading state is shown.
+4. When data arrives, episodes are rendered in a paginated, responsive PrimeVue DataTable.
+5. Users can filter episodes using the search input (global filter) by number, season, or name.
 
 ---
 

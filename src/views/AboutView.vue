@@ -51,6 +51,10 @@ const openReadmeInEditor = () => fetch('/__open-in-editor?file=README.md');
               <li>Premiere date</li>
             </ul>
           </li>
+          <li>
+            Show a tab with the episodes of the TV show. A list of episodes is displayed with
+            details such as episode number, name, airdate, and rating.
+          </li>
           <li>Zooming into the tv show image.</li>
           <li>
             Show a skeleton loader while the tv show details are being fetched, for better user
@@ -267,8 +271,8 @@ const openReadmeInEditor = () => fetch('/__open-in-editor?file=README.md');
             (<code>shared/api/</code>) that wraps <code>fetch</code> calls to the TVMaze API.
           </li>
           <li>
-            <strong>Schemas</strong> — Zod schemas used for runtime validation of API responses,
-            ensuring type safety at the application boundary.
+            <strong>Schemas</strong> — Dedicated schema files used for type validation of API
+            responses, ensuring type safety at the application boundary.
           </li>
           <li>
             <strong>Router</strong> — Configured with lazy-loaded routes to reduce the initial
@@ -280,6 +284,13 @@ const openReadmeInEditor = () => fetch('/__open-in-editor?file=README.md');
         Data flows unidirectionally: views and components dispatch actions to stores, stores call
         the API layer, and reactive state is automatically reflected back in the UI via Vue's
         reactivity system.
+
+        <img
+          src="/architecture/architecture.png"
+          alt="Architecture diagram"
+          style="max-width: 100%"
+          class="about-images"
+        />
       </AboutItem>
     </template>
   </Card>

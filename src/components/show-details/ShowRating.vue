@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import Badge from 'primevue/badge';
 import Rating from 'primevue/rating';
-import type { TVShowRating } from '@/schemas/shows';
+import type { TVShowRating } from '@/schemas/rating';
 import { NOT_AVAILABLE } from '@/shared/api/constants';
 
 interface IShowRatingProps {

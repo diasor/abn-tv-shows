@@ -38,6 +38,11 @@ const images = ref([
     thumbnailImageSrc: '/responsiveness/desktop-details-skeleton-front.png',
     alt: 'Desktop skeleton details front',
   },
+  {
+    itemImageSrc: '/responsiveness/ipad-episodes-landscape.png',
+    thumbnailImageSrc: '/responsiveness/ipad-episodes-landscape.png',
+    alt: 'iPad episodes landscape',
+  },
 ]);
 
 const responsiveOptions = ref([

@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia';
 import Card from 'primevue/card';
 import ShowTabs from '@/components/show-details/ShowTabs.vue';
 import ShowDetailsMain from '@/components/show-details/ShowDetailsMain.vue';
+import ShowEpisodeList from '@/components/show-episodes/ShowEpisodeList.vue';
 import { useShowDetailsStore } from '@/stores/useShowDetailsStore';
 
 interface IShowDetailsProps {
@@ -43,12 +44,7 @@ const tabSelected = ref('0');
         </template>
         <template #episodes>
           <p>Episodes content goes here...</p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-          est laborum.
+          <ShowEpisodeList />
         </template>
         <template #photos>
           <p>Episodes photos goes here...</p>
