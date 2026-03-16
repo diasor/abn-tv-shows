@@ -1,19 +1,6 @@
 import { Genre } from '@/schemas/genres';
-
-/**
- * TV Show image data structure.
- */
-export type TVShowImage = {
-  medium?: string;
-  original?: string;
-};
-
-/**
- * TV Show rating data structure.
- */
-export type TVShowRating = {
-  average?: number | null;
-};
+import { type TVShowImage } from '@/schemas/images';
+import { type TVShowRating } from '@/schemas/rating';
 
 /**
  * TV Show schedule data structure.
