@@ -8,11 +8,11 @@ import ShowsDetailsView from './ShowsDetailsView.vue';
 import ShowTabs from '@/components/show-details/ShowTabs.vue';
 import ShowDetailsMain from '@/components/show-details/ShowDetailsMain.vue';
 import { useShowDetailsStore } from '@/stores/useShowDetailsStore';
-import { tvShow1 } from '@/mocks/shows';
+import { tvShowComplete } from '@/mocks/shows';
 
 vi.mock('@/stores/useShowDetailsStore', () => ({
   useShowDetailsStore: vi.fn(() => ({
-    selectedShow: ref({ ...tvShow1 }),
+    selectedShow: ref({ ...tvShowComplete }),
     isLoading: ref(false),
     fetchShowDetails: vi.fn(),
   })),
@@ -48,7 +48,7 @@ describe('Testing ShowsDetailsView view', () => {
   it('renders an h1 heading', () => {
     // arrange & act
     const wrapper = createWrapper();
-    const expectedHeading = `${tvShow1.name}'s details`;
+    const expectedHeading = `${tvShowComplete.name}'s details`;
     const h1 = wrapper.find('h1');
     // assert
     expect(h1.exists()).toBe(true);
@@ -60,6 +60,7 @@ describe('Testing ShowsDetailsView view', () => {
     const mockUseShowDetailsStore = vi.mocked(useShowDetailsStore);
     mockUseShowDetailsStore.mockReturnValue({
       selectedShow: ref({}),
+      isLoading: ref(false),
       fetchShowDetails: vi.fn(),
     } as unknown as ReturnType<typeof useShowDetailsStore>);
     const wrapper = createWrapper();
@@ -83,14 +84,14 @@ describe('Testing ShowsDetailsView view', () => {
     const mockUseShowDetailsStore = vi.mocked(useShowDetailsStore);
     mockUseShowDetailsStore.mockReturnValue({
       fetchShowDetails: vi.fn(),
-      selectedShow: ref({ ...tvShow1 }),
+      selectedShow: ref({ ...tvShowComplete }),
       isLoading: ref(false),
     } as unknown as ReturnType<typeof useShowDetailsStore>);
     const wrapper = await createWrapper();
     const showDetailsMainComponent = wrapper.findComponent(ShowDetailsMain);
     // assert
     expect(showDetailsMainComponent.exists()).toBe(true);
-    expect(showDetailsMainComponent.props('tvShow')).toEqual(tvShow1);
+    expect(showDetailsMainComponent.props('tvShow')).toEqual(tvShowComplete);
     expect(showDetailsMainComponent.props('isLoading')).toBe(false);
   });
 });
