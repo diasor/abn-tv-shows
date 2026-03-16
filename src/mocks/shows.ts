@@ -1,4 +1,5 @@
-import type { TVShow, TVShowDetails, TVShowImage } from '@/schemas/shows';
+import type { TVShow, TVShowDetails } from '@/schemas/shows';
+import type { TVShowImage } from '@/schemas/images';
 import { genres1, genres2 } from './genres';
 
 export const tvShowImage: TVShowImage = {

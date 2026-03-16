@@ -1,5 +1,5 @@
-import { TVShowImage } from '@/schemas/images';
-import { TVShowRating } from '@/schemas/ratings';
+import { type TVShowImage } from '@/schemas/images';
+import { type TVShowRating } from '@/schemas/rating';
 
 export type TVShowEpisode = {
   id: string;
